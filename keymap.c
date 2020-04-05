@@ -16,60 +16,51 @@
 
 #include QMK_KEYBOARD_H
 
+enum leds {
+	LED00, LED01, LED02,
+	LED03, LED04, LED05,
+	LED06, LED07, LED08,
+	LED09, LED10, LED11,
+	LED12, LED13
+};
+
 enum layers {
 	/* Linux layers */
-	_L_BASE,
-	_L_LOWER,
-	_L_RAISE,
-	_L_ADJUST,
+	_L_BASE, _L_LOWER, _L_RAISE, _L_ADJUST,
 
 	/* MacOS layers */
-	_M_BASE,
-	_M_LOWER,
-	_M_RAISE,
-	_M_ADJUST
+	_M_BASE, _M_LOWER, _M_RAISE, _M_ADJUST
 };
 
 enum keycodes {
-	/* Linux layer switches */
-	L_BASE = SAFE_RANGE,
-	L_LOWER,
-	L_RAISE,
-	L_ADJUST,
+  /* toggle additional information via rgb leds ON/OFF */
+	INF_TGL = SAFE_RANGE,
 
-	L_D_BASE,
-	L_D_LOWER,
-	L_D_RAISE,
-	L_D_ADJUST,
-
-	/* MacOS layer switches */
-	M_BASE,
-	M_LOWER,
-	M_RAISE,
-	M_ADJUST,
-
-	M_D_BASE,
-	M_D_LOWER,
-	M_D_RAISE,
-	M_D_ADJUST,
-
-	/* toggle additional information via rgb leds ON/OFF */
-	INF_TGL,
-	/* switch from Linux layout to MacOS layout */
+  /* switch from Linux layout to MacOS layout */
 	L_TO_M,
 	/* switch from MacOs layout to Linux layout */
-	M_TO_L
+	M_TO_L,
+
+	/* Linux layer switches */
+	L_BASE, L_LOWER, L_RAISE, L_ADJUST,
+
+	L_D_BASE, L_D_LOWER, L_D_RAISE, L_D_ADJUST,
+
+	/* MacOS layer switches */
+	M_BASE, M_LOWER, M_RAISE, M_ADJUST,
+
+	M_D_BASE, M_D_LOWER, M_D_RAISE, M_D_ADJUST,
 };
 
-/* backslash key on both Linux and MacOS */
-#define _L_BACKSLASH RALT(7)
-#define _M_BACKSLASH LSFT(RALT(7))
+typedef union {
+  uint32_t raw;
+  struct {
+    bool info_mode :1;
+    bool linux_mode :1;
+  };
+} user_config_t;
 
-#define _BACKWARDS LCTL(KC_PGUP)
-#define _FORWARDS  LCTL(KC_PGDN)
-
-/* apple fn key (mapped to F20, needs to be software remapped) */
-#define _M_FN				 KC_F20
+user_config_t user_config;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -85,10 +76,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_BASE] = LAYOUT_planck_mit(
-		KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
-		KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
-		KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
-		L_LOWER, KC_LCTL, KC_LGUI, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
+		KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
+		_ESCAPE_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
+		KC_LSFT,       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
+		L_ADJUST,      KC_LCTL, KC_LGUI, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
 
 	/* Linux Lower
 	 * ,-----------------------------------------------------------------------------------.
@@ -153,10 +144,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_BASE] = LAYOUT_planck_mit(
-		KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
-		KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
-		KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
-		_M_FN,   KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
+		KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
+		_ESCAPE_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
+		KC_LSFT,       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
+		_M_FN,         KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
 
 	/* MacOS Lower
 	 * ,-----------------------------------------------------------------------------------.
@@ -192,7 +183,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH,    KC_F12, 
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  _BACKWARDS, _FORWARDS),
 
-
   /* MacOS Adjust
 	 * ,-----------------------------------------------------------------------------------.
 	 * | Tab  | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
@@ -212,6 +202,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+void set_led(uint8_t i, uint8_t r, uint8_t g, uint8_t b) {
+  if (i < RGBLED_NUM) {
+    led[i].r = r;
+    led[i].g = g;
+    led[i].b = b;
+  }
+}
+
+void suspend_power_down_user(void) {
+    // rgb_matrix_set_suspend_state(true);
+}
+
+void suspend_wakeup_init_user(void) {
+    // rgb_matrix_set_suspend_state(false);
+}
+
+// loading the eeprom data
+void keyboard_post_init_user(void) {
+  user_config.raw = eeconfig_read_user();
+
+  if(user_config.info_mode) {
+    // TODO: what to do here?
+  }
+}
+
+// EEPROM is getting reset
+void eeconfig_init_user(void) {
+  user_config.raw = 0;
+  user_config.linux_mode = true; // linux mode by default
+  eeconfig_update_user(user_config.raw);
+}
+
 void matrix_init_user(void) {
 }
 
@@ -219,41 +241,70 @@ void matrix_scan_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+  uint8_t wpm = get_current_wpm();
+
+  if(wpm < 20) {
+    set_led(LED08, WPM0_COLORS);
+    set_led(LED09, LED_OFF_COLORS);
+    set_led(LED10, LED_OFF_COLORS);
+    set_led(LED11, LED_OFF_COLORS);
+  } else if(wpm < 50) {
+    set_led(LED08, WPM1_COLORS);
+    set_led(LED09, WPM1_COLORS);
+    set_led(LED10, LED_OFF_COLORS);
+    set_led(LED11, LED_OFF_COLORS);
+  } else if(wpm < 80) {
+    set_led(LED08, WPM2_COLORS);
+    set_led(LED09, WPM2_COLORS);
+    set_led(LED10, WPM2_COLORS);
+    set_led(LED11, LED_OFF_COLORS);
+  } else {
+    set_led(LED08, WPM3_COLORS);
+    set_led(LED09, WPM3_COLORS);
+    set_led(LED10, WPM3_COLORS);
+    set_led(LED11, WPM3_COLORS);
+  }
+
+
 	/* Linux */
 	switch (keycode) {
 		case L_BASE:		if(record->event.pressed) {
 			// TODO: what to do here? (base layer)
 		}
 		return false;
-		case L_LOWER:		if(record->event.pressed) {
-			layer_on(_L_LOWER);
-			update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
-		} else {
-			layer_off(_L_LOWER);
-			update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
-		}
+    case L_LOWER:
+    if(record->event.pressed) layer_on(_L_LOWER);
+    else                      layer_off(_L_LOWER);
+    update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
+    return false;
+
+		case L_RAISE:
+    if(record->event.pressed) layer_on(_L_RAISE);
+		else                      layer_off(_L_RAISE);
+    update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
 		return false;
-		case L_RAISE:		if(record->event.pressed) {
-			layer_on(_M_RAISE);
-			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		} else {
-			layer_off(_M_RAISE);
-			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		}
+
+    case L_ADJUST:
+    if(record->event.pressed) layer_on(_L_ADJUST);
+		else                      layer_off(_L_ADJUST);
 		return false;
 
 		case L_D_BASE:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
 		return false;
+
 		case L_D_LOWER:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
 		return false;
+
 		case L_D_RAISE:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
 		return false;
+
 		case L_D_ADJUST:	if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
@@ -261,38 +312,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		
 		/* MacOS */
 		case M_BASE:		if(record->event.pressed) {
-			// TODO: what to do here?
+			// TODO: what to do here? (base layer)
 		}
 		return false;
-		case M_LOWER:		if(record->event.pressed) {
-			layer_on(_M_LOWER);
-			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		} else {
-			layer_off(_M_LOWER);
-			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		}
+
+		case M_LOWER:
+    if(record->event.pressed) layer_on(_M_LOWER);
+    else                      layer_off(_M_LOWER);
+    update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
 		return false;
-		case M_RAISE:		if(record->event.pressed) {
-			layer_on(_M_RAISE);
-			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		} else {
-			layer_off(_M_RAISE);
-			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		}
+
+		case M_RAISE:
+    if(record->event.pressed) layer_on(_M_RAISE);
+		else                      layer_off(_M_RAISE);
+    update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
+		return false;
+
+    case M_ADJUST:
+    if(record->event.pressed) layer_on(_M_ADJUST);
+		else                      layer_off(_M_ADJUST);
 		return false;
 
     case M_D_BASE:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
 		return false;
+
 		case M_D_LOWER:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
 		return false;
+
 		case M_D_RAISE:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
 		return false;
+
 		case M_D_ADJUST:  if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
 		}
@@ -301,52 +356,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		/* Info Toggle */
 		case INF_TGL: {
-
+      user_config.info_mode = !user_config.info_mode;
+      eeconfig_update_user(user_config.raw);
 		} break;
 
 		/* Switch from Linux to MacOS */
 		case L_TO_M: {
-			set_single_persistent_default_layer(_M_BASE);
+      user_config.linux_mode = false;
+      if(user_config.info_mode) {
+        set_led(LED12, MACOS_COLORS);
+      }
+			set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
 		} break;
 
 		/* Switch from MacOS to Linux */
 		case M_TO_L: {
+      user_config.linux_mode = true;
+      if(user_config.info_mode) {
+        set_led(LED12, LINUX_COLORS);
+      }
 			set_single_persistent_default_layer(_L_BASE);
 		} break;
 	}
 	return true;
 }
 
-void led_set_user(uint8_t usb_led) {
+layer_state_t layer_state_set_user(layer_state_t state) { // TODO: add correct colors
+  if(user_config.info_mode) {
+    switch(biton32(state)) {
+      case _L_BASE: {
+        set_led(LED06, LAYER_BASE_COLORS);
+        set_led(LED13, LAYER_BASE_COLORS);
+      } break;
+      case _L_LOWER: {
+        set_led(LED06, LAYER_LOWER_COLORS);
+        set_led(LED13, LAYER_LOWER_COLORS);
+      } break;
+      case _L_RAISE: {
+        set_led(LED06, LAYER_RAISE_COLORS);
+        set_led(LED13, LAYER_RAISE_COLORS);
+      } break;
+      case _L_ADJUST: {
+        set_led(LED06, LAYER_ADJUST_COLORS);
+        set_led(LED13, LAYER_ADJUST_COLORS);
+      } break;
+    }
+  }
+  return state;
+}
 
-	if (usb_led & (1 << USB_LED_NUM_LOCK)) {
-		
-	} else {
-		
-	}
-
-	if (usb_led & (1 << USB_LED_CAPS_LOCK)) {
-		
-	} else {
-		
-	}
-
-	if (usb_led & (1 << USB_LED_SCROLL_LOCK)) {
-		
-	} else {
-		
-	}
-
-	if (usb_led & (1 << USB_LED_COMPOSE)) {
-		
-	} else {
-		
-	}
-
-	if (usb_led & (1 << USB_LED_KANA)) {
-		
-	} else {
-		
-	}
-
+bool led_update_user(led_t led_state) {
+  if(led_state.caps_lock) {
+    set_led(LED07, CAPS_COLORS);
+    return false;
+  } else {
+    return true;
+  }
 }
