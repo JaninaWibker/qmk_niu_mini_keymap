@@ -91,16 +91,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
 	 * | Ctrl |  \*  |   ^  |   -  |   =  |   \  | Left | Down |  Up  |Right |   ;  |  '   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
-	 * | Shift| RGB C| BL C |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Enter |
+	 * | Shift| RGB C| BL C |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Shift |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
-	 * | Lower| Ctrl | Super|  Alt | Raise|    Enter    |Lower |AltGr | Caps | Left |Right |
+	 * | Lower| Ctrl | Super|  Alt | Raise|    Enter    |Lower |AltGr | Caps | Hue+ | Val+ |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_LOWER] = LAYOUT_planck_mit(
 		KC_TAB,  KC_1,    	   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_DEL, 
 		KC_RCTL, _L_BACKSLASH, KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT, 
 		KC_TRNS, RGB_TOG,			 BL_TOGG, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, 
-		KC_TRNS, KC_TRNS,			 KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUD, RGB_HUI),
+		KC_TRNS, KC_TRNS,			 KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_VAI),
 
 	/* Linux Raise
 	 * ,-----------------------------------------------------------------------------------.
