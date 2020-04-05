@@ -62,6 +62,10 @@ typedef union {
 
 user_config_t user_config;
 
+static uint16_t idle_timer = 0;
+static uint8_t halfmin_counter = 0;
+static bool led_on = true;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* Linux - Base
@@ -202,7 +206,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-void set_led(uint8_t i, uint8_t r, uint8_t g, uint8_t b) {
+void set_led(uint8_t r, uint8_t g, uint8_t b, uint8_t i) {
   if (i < RGBLED_NUM) {
     led[i].r = r;
     led[i].g = g;
@@ -238,33 +242,64 @@ void matrix_init_user(void) {
 }
 
 void matrix_scan_user(void) {
+  /* idle_timer needs to be set one time */
+  if(idle_timer == 0) idle_timer = timer_read();
+
+  #ifdef BACKLIGHT_ENABLE
+    if(led_on && timer_elapsed(idle_timer) > 30000) {
+      halfmin_counter++;
+      idle_timer = timer_read();
+    }
+
+    if(led_on && halfmin_counter >= BACKLIGHT_TIMEOUT * 2) {
+			backlight_disable();
+      led_on = false;
+      halfmin_counter = 0;
+    }
+  #endif
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-  uint8_t wpm = get_current_wpm();
-
-  if(wpm < 20) {
-    set_led(LED08, WPM0_COLORS);
-    set_led(LED09, LED_OFF_COLORS);
-    set_led(LED10, LED_OFF_COLORS);
-    set_led(LED11, LED_OFF_COLORS);
-  } else if(wpm < 50) {
-    set_led(LED08, WPM1_COLORS);
-    set_led(LED09, WPM1_COLORS);
-    set_led(LED10, LED_OFF_COLORS);
-    set_led(LED11, LED_OFF_COLORS);
-  } else if(wpm < 80) {
-    set_led(LED08, WPM2_COLORS);
-    set_led(LED09, WPM2_COLORS);
-    set_led(LED10, WPM2_COLORS);
-    set_led(LED11, LED_OFF_COLORS);
-  } else {
-    set_led(LED08, WPM3_COLORS);
-    set_led(LED09, WPM3_COLORS);
-    set_led(LED10, WPM3_COLORS);
-    set_led(LED11, WPM3_COLORS);
+  if(record->event.pressed) {
+    #ifdef BACKLIGHT_ENABLE
+      if(led_on == false) {
+				backlight_enable();
+        led_on = true;
+      }
+    #endif
+    idle_timer = timer_read();
+    halfmin_counter = 0;
   }
+
+  #ifdef WPM_INDICATOR
+
+    uint8_t wpm = get_current_wpm();
+
+    if(wpm < 20) {
+      set_led(WPM0_COLORS, LED08);
+      set_led(LED_OFF_COLORS, LED09);
+      set_led(LED_OFF_COLORS, LED10);
+      set_led(LED_OFF_COLORS, LED11);
+    } else if(wpm < 50) {
+      set_led(WPM1_COLORS, LED08);
+      set_led(WPM1_COLORS, LED09);
+      set_led(LED_OFF_COLORS, LED10);
+      set_led(LED_OFF_COLORS, LED11);
+    } else if(wpm < 80) {
+      set_led(WPM2_COLORS, LED08);
+      set_led(WPM2_COLORS, LED09);
+      set_led(WPM2_COLORS, LED10);
+      set_led(LED_OFF_COLORS, LED11);
+    } else {
+      set_led(WPM3_COLORS, LED08);
+      set_led(WPM3_COLORS, LED09);
+      set_led(WPM3_COLORS, LED10);
+      set_led(WPM3_COLORS, LED11);
+    }
+		rgblight_set();
+
+  #endif
 
 
 	/* Linux */
@@ -364,7 +399,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case L_TO_M: {
       user_config.linux_mode = false;
       if(user_config.info_mode) {
-        set_led(LED12, MACOS_COLORS);
+        #ifdef OS_INDICATOR
+          set_led(MACOS_COLORS, LED12);
+					rgblight_set();
+        #endif
       }
 			set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
 		} break;
@@ -373,7 +411,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case M_TO_L: {
       user_config.linux_mode = true;
       if(user_config.info_mode) {
-        set_led(LED12, LINUX_COLORS);
+        #ifdef OS_INDICATOR
+          set_led(LINUX_COLORS, LED12);
+					rgblight_set();
+        #endif
       }
 			set_single_persistent_default_layer(_L_BASE);
 		} break;
@@ -382,34 +423,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) { // TODO: add correct colors
-  if(user_config.info_mode) {
-    switch(biton32(state)) {
-      case _L_BASE: {
-        set_led(LED06, LAYER_BASE_COLORS);
-        set_led(LED13, LAYER_BASE_COLORS);
-      } break;
-      case _L_LOWER: {
-        set_led(LED06, LAYER_LOWER_COLORS);
-        set_led(LED13, LAYER_LOWER_COLORS);
-      } break;
-      case _L_RAISE: {
-        set_led(LED06, LAYER_RAISE_COLORS);
-        set_led(LED13, LAYER_RAISE_COLORS);
-      } break;
-      case _L_ADJUST: {
-        set_led(LED06, LAYER_ADJUST_COLORS);
-        set_led(LED13, LAYER_ADJUST_COLORS);
-      } break;
+  #ifdef LAYER_INDICATOR
+    if(user_config.info_mode) {
+      switch(biton32(state)) {
+        case _L_BASE: {
+          set_led(LAYER_BASE_COLORS, LED06);
+          set_led(LAYER_BASE_COLORS, LED13);
+        } break;
+        case _L_LOWER: {
+          set_led(LAYER_LOWER_COLORS, LED06);
+          set_led(LAYER_LOWER_COLORS, LED13);
+        } break;
+        case _L_RAISE: {
+          set_led(LAYER_RAISE_COLORS, LED06);
+          set_led(LAYER_RAISE_COLORS, LED13);
+        } break;
+        case _L_ADJUST: {
+          set_led(LAYER_ADJUST_COLORS, LED06);
+          set_led(LAYER_ADJUST_COLORS, LED13);
+        } break;
+      }
+			rgblight_set();
     }
-  }
+  #endif
   return state;
 }
 
 bool led_update_user(led_t led_state) {
-  if(led_state.caps_lock) {
-    set_led(LED07, CAPS_COLORS);
-    return false;
-  } else {
-    return true;
-  }
+  #ifdef CAPSLOCK_INDICATOR
+    if(led_state.caps_lock) {
+      set_led(CAPS_COLORS, LED07);
+			rgblight_set();
+      return false;
+    } else {
+      return true;
+    }
+  #endif
 }
