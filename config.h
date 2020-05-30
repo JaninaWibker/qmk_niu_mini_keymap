@@ -26,7 +26,7 @@
 #define LAYER_RAISE_COLORS  RGB_GREEN
 #define LAYER_ADJUST_COLORS RGB_RED
 
-#define WPM_INDICATOR
+/* #define WPM_INDICATOR */
 #define LAYER_INDICATOR
 #define CAPSLOCK_INDICATOR
 #define OS_INDICATOR
@@ -39,7 +39,8 @@
 #define _FORWARDS  LCTL(KC_PGDN)
 
 /* escape normally, but L_LOWER when held down */
-#define _ESCAPE_LOWER MT(L_LOWER, KC_ESC)
+#define _L_TAB_LOWER LT(_L_LOWER, KC_TAB)
+#define _M_TAB_LOWER LT(_M_LOWER, KC_TAB)
 
 /* apple fn key (mapped to F20, needs to be software remapped) */
 #define _M_FN				 KC_F20

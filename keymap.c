@@ -15,6 +15,9 @@
  */
 
 #include QMK_KEYBOARD_H
+#ifdef CONSOLE_ENABLE
+#include <print.h>
+#endif
 
 enum leds {
 	LED00, LED01, LED02,
@@ -70,77 +73,77 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* Linux - Base
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+	 * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   [  |  ]   |
+	 * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   [  |  ]   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
-	 * |  Fn1 | Ctrl | Super|  Alt | Raise|    Space    | Lower|AltGr | Caps | Left |Right |
+	 * |Adjust| Ctrl | Super|  Alt | Raise|    Space    | Lower|AltGr | Caps | Left |Right |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_BASE] = LAYOUT_planck_mit(
-		KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
-		_ESCAPE_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
-		KC_LSFT,       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
-		L_ADJUST,      KC_LCTL, KC_LGUI, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
+		KC_ESC,       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
+		_L_TAB_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
+		KC_LSFT,      KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
+		L_ADJUST,     KC_LCTL, KC_LGUI, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
 
 	/* Linux Lower
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+	 * | Ctrl |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Ctrl |  \*  |   ^  |   -  |   =  |   \  | Left | Down |  Up  |Right |   ;  |  '   |
+	 * | Tab  |  \*  |   ^  |   -  |   =  |   \  | Left | Down |  Up  |Right |   ;  |  '   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
-	 * | Shift| RGB C| BL C |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Shift |
+	 * | Shift| Val- | Val+ |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Shift |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
-	 * | Lower| Ctrl | Super|  Alt | Raise|    Enter    |Lower |AltGr | Caps | Hue+ | Val+ |
+	 * |Adjust| Ctrl | Super|  Alt | Raise|    Enter    |Lower |AltGr | Caps | Hue+ | Sat+ |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_LOWER] = LAYOUT_planck_mit(
-		KC_TAB,  KC_1,    	   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_DEL, 
-		KC_RCTL, _L_BACKSLASH, KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT, 
-		KC_TRNS, RGB_TOG,			 BL_TOGG, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, 
-		KC_TRNS, KC_TRNS,			 KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_VAI),
+		KC_RCTL, KC_1,    	   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_DEL, 
+		KC_TRNS, _L_BACKSLASH, KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT, 
+		KC_TRNS, RGB_VAD,			 RGB_VAI, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, 
+		KC_TRNS, KC_TRNS,			 KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI),
 
 	/* Linux Raise
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+	 * | Ctrl  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Ctrl |Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
+	 * | Tab  |Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift| Left | Down | Right| Mute |  Esc |Enter | End  |   ,  |   .  |   /  | F12  |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
-	 * | Lower| Ctrl | Super|  Alt | Raise|  Backspace  |Lower |AltGr | Caps | Bckw | Forw |
+	 * |Adjust| Ctrl | Super|  Alt | Raise|  Backspace  |Lower |AltGr | Caps | Bckw | Forw |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_RAISE] = LAYOUT_planck_mit(
-		KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11, 
-		KC_RCTL, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
+		KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11, 
+		KC_TRNS,  KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
 		KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH,    KC_F12, 
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  _BACKWARDS, _FORWARDS),
 
 	/* Linux Adjust
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
+	 * | Ctrl | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Ctrl |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
+	 * | Tab  |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
-	 * | Shift| RGB T| BL T | Reset|  Mac |  Esc | Bksp |   7  |   8  |   9  |Enter | Lck3 |
+	 * | Shift| RGB T| Cycle| Reset|  Mac |  Esc | Bksp |   7  |   8  |   9  |Enter | Lck3 |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
-	 * | Lower| Ctrl | Super|  Alt | Raise|    Space    |Lower |   0  |   .  |AltGr | Lck0 |
+	 * |Adjust| Ctrl | Super|  Alt | Raise|    Space    |Lower |   0  |   .  |AltGr | Lck0 |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_ADJUST] = LAYOUT_planck_mit(
-		KC_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, KC_NO,  KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, L_D_LOWER, 
-		KC_RCTL, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS, L_D_RAISE, 
-		KC_TRNS, RGB_TOG, BL_TOGG, RESET,   L_TO_M,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT, L_D_ADJUST, 
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, L_D_BASE),
+		KC_TRNS, KC_BTN1, KC_MS_U,					KC_BTN2, KC_WH_U, KC_NO,  KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, L_D_LOWER, 
+		KC_TRNS,  KC_MS_L, KC_MS_D,					KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS, L_D_RAISE, 
+		KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, RESET,   L_TO_M,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT, L_D_ADJUST, 
+		KC_TRNS, KC_TRNS, KC_TRNS,					KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, L_D_BASE),
 
 	/* MacOS - Base
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+	 * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   [  |  ]   |
+	 * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   [  |  ]   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -148,33 +151,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_BASE] = LAYOUT_planck_mit(
-		KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
-		_ESCAPE_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
-		KC_LSFT,       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
-		_M_FN,         KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
+		KC_ESC,       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,    KC_P,     KC_BSPC, 
+		_M_TAB_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,    KC_LBRC,  KC_RBRC, 
+		KC_LSFT,      KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT, 
+		_M_FN,        KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, KC_CAPS, KC_LEFT,  KC_RGHT),
 
 	/* MacOS Lower
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+	 * | Ctrl |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Ctrl |  \*  |   ^  |   -  |   =  |   \  | Left | Down |  Up  |Right |   ;  |  '   |
+	 * | Tab  |  \*  |   ^  |   -  |   =  |   \  | Left | Down |  Up  |Right |   ;  |  '   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
-	 * | Shift| RGB C| BL C |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Enter |
+	 * | Shift| Val- | Val+ |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Enter |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
-	 * |  Fn  | Ctrl |  Alt | Super| Raise|    Enter    |Lower |AltGr | Caps | Left |Right |
+	 * |  Fn  | Ctrl |  Alt | Super| Raise|    Enter    |Lower |AltGr | Caps | Hue+ | Sat+ |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_LOWER] = LAYOUT_planck_mit(
-		KC_TAB,  KC_1,   		   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_DEL, 
-		KC_RCTL, _M_BACKSLASH, KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT, 
-		KC_TRNS, RGB_TOG,		   BL_TOGG, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, 
-		KC_TRNS, KC_TRNS,		   KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUD, RGB_HUI),
+		KC_RCTL, 			KC_1,   		  KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_DEL, 
+		_M_TAB_LOWER, _M_BACKSLASH,	KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT, 
+		KC_TRNS, 			RGB_VAD,			RGB_VAI, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, 
+		KC_TRNS, 			KC_TRNS,		  KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI),
 
 	/* MacOS Raise
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+	 * | Ctrl |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Ctrl |Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
+	 * | Tab  |Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift| Left | Down | Right| Mute |  Esc |Enter | End  |   ,  |   .  |   /  | F12  |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -182,27 +185,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_RAISE] = LAYOUT_planck_mit(
-		KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11, 
+		KC_TRNS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11, 
 		KC_TRNS, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
 		KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH,    KC_F12, 
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  _BACKWARDS, _FORWARDS),
 
   /* MacOS Adjust
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Tab  | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
+	 * | Ctrl | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Ctrl |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
+	 * | Tab  |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
-	 * | Shift| RGB T| BL T | Reset| Linux|  Esc | Bksp |   7  |   8  |   9  |Enter | Lck3 |
+	 * | Shift| RGB T| Cycle| Reset| Linux|  Esc | Bksp |   7  |   8  |   9  |Enter | Lck3 |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
 	 * |  Fn  | Ctrl |  Alt | Super| Raise|    Space    |Lower |   0  |   .  |AltGr | Lck0 |
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_ADJUST] = LAYOUT_planck_mit(
-		KC_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, INF_TGL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS,  M_D_LOWER, 
-		KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, KC_TAB,  KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS,  M_D_RAISE, 
-		KC_TRNS, RGB_TOG, BL_TOGG, RESET,   M_TO_L,  KC_ESC,  KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT,  M_D_ADJUST, 
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC,             KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, M_D_BASE)
+		DEBUG,   KC_BTN1, 									KC_MS_U, KC_BTN2, KC_WH_U, INF_TGL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS,  M_D_LOWER, 
+		KC_BTN3, KC_MS_L, 									KC_MS_D, KC_MS_R, KC_WH_D, KC_TAB,  KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS,  M_D_RAISE, 
+		KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, RESET,   M_TO_L,  KC_ESC,  KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT,  M_D_ADJUST, 
+		KC_TRNS, KC_TRNS, 									KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC,             KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, M_D_BASE)
 
 };
 
@@ -309,21 +312,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		return false;
     case L_LOWER:
-    if(record->event.pressed) layer_on(_L_LOWER);
-    else                      layer_off(_L_LOWER);
-    update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
-    return false;
+			if(record->event.pressed) {
+				layer_on(_L_LOWER);
+				#ifdef CONSOLE_ENABLE
+					print("L_LOWER down\n");
+				#endif
+			} else {
+				layer_off(_L_LOWER);
+				#ifdef CONSOLE_ENABLE
+					print("L_LOWER up\n");
+				#endif
+			}
+			update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
+			return false;
 
 		case L_RAISE:
-    if(record->event.pressed) layer_on(_L_RAISE);
-		else                      layer_off(_L_RAISE);
-    update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
-		return false;
+			if(record->event.pressed) {
+				layer_on(_L_RAISE);
+				#ifdef CONSOLE_ENABLE
+					print("L_RAISE down\n");
+				#endif
+			} else {
+				layer_off(_L_RAISE);
+				#ifdef CONSOLE_ENABLE
+					print("L_RAISE up\n");
+				#endif
+			}
+			update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
+			return false;
 
     case L_ADJUST:
-    if(record->event.pressed) layer_on(_L_ADJUST);
-		else                      layer_off(_L_ADJUST);
-		return false;
+			if(record->event.pressed) {
+				#ifdef CONSOLE_ENABLE
+					print("L_ADJST down\n");
+				#endif
+				layer_on(_L_ADJUST);
+			} else {
+				#ifdef CONSOLE_ENABLE
+					print("L_ADJST up\n");
+				#endif
+				layer_off(_L_ADJUST);
+			}
+			return false;
 
 		case L_D_BASE:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
@@ -352,21 +382,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		return false;
 
 		case M_LOWER:
-    if(record->event.pressed) layer_on(_M_LOWER);
-    else                      layer_off(_M_LOWER);
-    update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		return false;
-
+			if(record->event.pressed) {
+				#ifdef CONSOLE_ENABLE
+					print("M_LOWER down\n");
+				#endif
+				layer_on(_M_LOWER);
+			} else {
+				#ifdef CONSOLE_ENABLE
+					print("M_LOWER up\n");
+				#endif
+				layer_off(_M_LOWER);
+			}
+			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
+			return false;
+				
 		case M_RAISE:
-    if(record->event.pressed) layer_on(_M_RAISE);
-		else                      layer_off(_M_RAISE);
-    update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
-		return false;
+			if(record->event.pressed) {
+				#ifdef CONSOLE_ENABLE
+					print("M_RAISE down\n");
+				#endif
+				layer_on(_M_RAISE);
+			} else {
+				#ifdef CONSOLE_ENABLE
+					print("M_RAISE up\n");
+				#endif
+				layer_off(_M_RAISE);
+			}
+			update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
+			return false;
 
     case M_ADJUST:
-    if(record->event.pressed) layer_on(_M_ADJUST);
-		else                      layer_off(_M_ADJUST);
-		return false;
+			if(record->event.pressed) {
+				#ifdef CONSOLE_ENABLE
+					print("M_ADJST down\n");
+				#endif
+				layer_on(_M_ADJUST);
+			} else {
+				#ifdef CONSOLE_ENABLE
+					print("M_ADJST up\n");
+				#endif
+				layer_off(_M_ADJUST);
+			}
+			return false;
 
     case M_D_BASE:		if(record->event.pressed) {
       // TODO: what to do here? (change default layer)
