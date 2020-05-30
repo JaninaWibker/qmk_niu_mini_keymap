@@ -107,9 +107,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* Linux Raise
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Ctrl  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+	 * | Ctrl |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Tab  |Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
+	 * | Super|Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift| Left | Down | Right| Mute |  Esc |Enter | End  |   ,  |   .  |   /  | F12  |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -118,15 +118,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 	[_L_RAISE] = LAYOUT_planck_mit(
 		KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11, 
-		KC_TRNS,  KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
+		KC_LGUI, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
 		KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH,    KC_F12, 
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  _BACKWARDS, _FORWARDS),
 
 	/* Linux Adjust
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Ctrl | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
+	 * | Debug| Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Tab  |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
+	 * | Btn3 |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift| RGB T| Cycle| Reset|  Mac |  Esc | Bksp |   7  |   8  |   9  |Enter | Lck3 |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -134,10 +134,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_ADJUST] = LAYOUT_planck_mit(
-		KC_TRNS, KC_BTN1, KC_MS_U,					KC_BTN2, KC_WH_U, KC_NO,  KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, L_D_LOWER, 
-		KC_TRNS,  KC_MS_L, KC_MS_D,					KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS, L_D_RAISE, 
-		KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, RESET,   L_TO_M,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT, L_D_ADJUST, 
-		KC_TRNS, KC_TRNS, KC_TRNS,					KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, L_D_BASE),
+		DEBUG,  KC_BTN1, KC_MS_U,					  KC_BTN2, KC_WH_U, INF_TGL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, L_D_LOWER, 
+		KC_BTN3,  KC_MS_L, KC_MS_D,					KC_MS_R, KC_WH_D, KC_TAB,  KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS, L_D_RAISE, 
+		KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, RESET,   L_TO_M,  KC_ESC,  KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT, L_D_ADJUST, 
+		KC_TRNS, KC_TRNS, KC_TRNS,					KC_TRNS, KC_TRNS, KC_SPC,            KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, L_D_BASE),
 
 	/* MacOS - Base
 	 * ,-----------------------------------------------------------------------------------.
@@ -177,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * ,-----------------------------------------------------------------------------------.
 	 * | Ctrl |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Tab  |Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
+	 * | Super|Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift| Left | Down | Right| Mute |  Esc |Enter | End  |   ,  |   .  |   /  | F12  |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -186,15 +186,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 	[_M_RAISE] = LAYOUT_planck_mit(
 		KC_TRNS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11, 
-		KC_TRNS, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
+		KC_LGUI, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC, 
 		KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH,    KC_F12, 
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  _BACKWARDS, _FORWARDS),
 
   /* MacOS Adjust
 	 * ,-----------------------------------------------------------------------------------.
-	 * | Ctrl | Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
+	 * | Debug| Btn1 | M Up | Btn2 |Scrll+| InfT |   /  |   1  |   2  |   3  |   -  | Lck1 |
 	 * |------+------+------+------+------+-------------+------+------+------+------+------|
-	 * | Tab  |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
+	 * | Btn3 |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Lck2 |
 	 * |------+------+------+------+------+------|------+------+------+------+------+------|
 	 * | Shift| RGB T| Cycle| Reset| Linux|  Esc | Bksp |   7  |   8  |   9  |Enter | Lck3 |
 	 * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -202,18 +202,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_ADJUST] = LAYOUT_planck_mit(
-		DEBUG,   KC_BTN1, 									KC_MS_U, KC_BTN2, KC_WH_U, INF_TGL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS,  M_D_LOWER, 
-		KC_BTN3, KC_MS_L, 									KC_MS_D, KC_MS_R, KC_WH_D, KC_TAB,  KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS,  M_D_RAISE, 
+		DEBUG,   KC_BTN1, KC_MS_U,          KC_BTN2, KC_WH_U, INF_TGL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS,  M_D_LOWER, 
+		KC_BTN3, KC_MS_L, KC_MS_D,          KC_MS_R, KC_WH_D, KC_TAB,  KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS,  M_D_RAISE, 
 		KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, RESET,   M_TO_L,  KC_ESC,  KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT,  M_D_ADJUST, 
-		KC_TRNS, KC_TRNS, 									KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC,             KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, M_D_BASE)
+		KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,             KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, M_D_BASE)
 
 };
 
 void set_led(uint8_t r, uint8_t g, uint8_t b, uint8_t i) {
   if (i < RGBLED_NUM) {
-    led[i].r = r;
-    led[i].g = g;
-    led[i].b = b;
+		rgblight_setrgb_at(r, g, b, i);
+		// #ifdef CONSOLE_ENABLE
+		// 	printf("set_led:%d,%d,%d,%d", r, g, b, i);
+		// #endif
+    // led[i].r = r;
+    // led[i].g = g;
+    // led[i].b = b;
   }
 }
 
@@ -448,32 +452,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		/* Info Toggle */
 		case INF_TGL: {
-      user_config.info_mode = !user_config.info_mode;
-      eeconfig_update_user(user_config.raw);
+			if(record->event.pressed) {
+				user_config.info_mode = !user_config.info_mode;
+				eeconfig_update_user(user_config.raw);
+				#ifdef CONSOLE_ENABL
+					print("INF_TGL");
+					if(user_config.info_mode) print("on\n");
+					else 											print("off\n");
+				#endif
+			}
 		} break;
 
 		/* Switch from Linux to MacOS */
 		case L_TO_M: {
-      user_config.linux_mode = false;
-      if(user_config.info_mode) {
-        #ifdef OS_INDICATOR
-          set_led(MACOS_COLORS, LED12);
-					rgblight_set();
-        #endif
-      }
-			set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
+			if(record->event.pressed) {
+				#ifdef CONSOLE_ENABLE
+					print("LAYOUT: Mac\n");
+				#endif
+				user_config.linux_mode = false;
+				if(user_config.info_mode) {
+					#ifdef OS_INDICATOR
+						set_led(MACOS_COLORS, LED12);
+						rgblight_set();
+					#endif
+				}
+				set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
+			}
 		} break;
 
 		/* Switch from MacOS to Linux */
 		case M_TO_L: {
-      user_config.linux_mode = true;
-      if(user_config.info_mode) {
-        #ifdef OS_INDICATOR
-          set_led(LINUX_COLORS, LED12);
-					rgblight_set();
-        #endif
-      }
-			set_single_persistent_default_layer(_L_BASE);
+			if(record->event.pressed) {
+				#ifdef CONSOLE_ENABLE
+					print("LAYOUT: Linux\n");
+				#endif
+				user_config.linux_mode = true;
+				if(user_config.info_mode) {
+					#ifdef OS_INDICATOR
+						set_led(LINUX_COLORS, LED12);
+						rgblight_set();
+					#endif
+				}
+				set_single_persistent_default_layer(_L_BASE);
+			}
 		} break;
 	}
 	return true;
@@ -482,26 +503,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 layer_state_t layer_state_set_user(layer_state_t state) { // TODO: add correct colors
   #ifdef LAYER_INDICATOR
     if(user_config.info_mode) {
+			#ifdef CONSOLE_ENABLE
+				print("info_mode:on");
+			#endif
       switch(biton32(state)) {
-        case _L_BASE: {
+        case _L_BASE:
+				case _M_BASE: {
+					#ifdef CONSOLE_ENABLE
+						print("layer:base\n");
+					#endif
+					/*if(rgblight_is_enabled()) {*/ // TODO: does this read the eeprom? (would be the wanted behaviour here)
+						// rgblight_enable_noeeprom();
+					/*}*/
           set_led(LAYER_BASE_COLORS, LED06);
           set_led(LAYER_BASE_COLORS, LED13);
         } break;
-        case _L_LOWER: {
+        case _L_LOWER:
+				case _M_LOWER: {
+					#ifdef CONSOLE_ENABLE
+						print("layer:lower\n");
+					#endif
+					// rgblight_disable_noeeprom();
           set_led(LAYER_LOWER_COLORS, LED06);
           set_led(LAYER_LOWER_COLORS, LED13);
         } break;
-        case _L_RAISE: {
+        case _L_RAISE:
+				case _M_RAISE: {
+					#ifdef CONSOLE_ENABLE
+						print("layer:raise\n");
+					#endif
+					// rgblight_disable_noeeprom();
           set_led(LAYER_RAISE_COLORS, LED06);
           set_led(LAYER_RAISE_COLORS, LED13);
         } break;
-        case _L_ADJUST: {
+        case _L_ADJUST:
+				case _M_ADJUST: {
+					#ifdef CONSOLE_ENABLE
+						print("layer:adjst\n");
+					#endif
+					// rgblight_disable_noeeprom();
           set_led(LAYER_ADJUST_COLORS, LED06);
           set_led(LAYER_ADJUST_COLORS, LED13);
         } break;
       }
 			rgblight_set();
-    }
+    } else {
+			#ifdef CONSOLE_ENABLE
+				print("info_mode:off");
+			#endif
+		}
   #endif
   return state;
 }

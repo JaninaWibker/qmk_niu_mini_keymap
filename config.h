@@ -10,7 +10,17 @@
 /* rgb lighting will be switched off when host goes to sleep */
 #define RGBLIGHT_SLEEP
 
-#define BACKLIGHT_TIMEOUT 5 // in minutes
+#define BACKLIGHT_TIMEOUT 2 // in minutes
+
+/* tap and hold (mod tap, layer tap; ) */
+#define RETRO_TAPPING
+#define PERMISSIVE_HOLD
+#define TAPPING_TERM 0
+
+/* mouse speed & acceleration */
+#define MOUSEKEY_MAX_SPEED 10
+#define MOUSEKEY_INTERVAL 32
+#define MOUSEKEY_TIME_TO_MAX 40
 
 /* led colors */
 #define LINUX_COLORS        RGB_PURPLE
@@ -38,9 +48,12 @@
 #define _BACKWARDS LCTL(KC_PGUP)
 #define _FORWARDS  LCTL(KC_PGDN)
 
-/* escape normally, but L_LOWER when held down */
+/* tab normally, but L_LOWER / M_LOWER when held down */
 #define _L_TAB_LOWER LT(_L_LOWER, KC_TAB)
 #define _M_TAB_LOWER LT(_M_LOWER, KC_TAB)
+
+/* space normally, but (left) control when held down */
+#define _CTRL_SP MT(KC_LCTL, KC_SPC)
 
 /* apple fn key (mapped to F20, needs to be software remapped) */
 #define _M_FN				 KC_F20
