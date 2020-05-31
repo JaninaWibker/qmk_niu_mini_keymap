@@ -42,8 +42,8 @@
 #define OS_INDICATOR
 
 /* backslash key on both Linux and MacOS */
-#define _L_BACKSLASH RALT(7)
-#define _M_BACKSLASH LSFT(RALT(7))
+#define _L_BACKSLASH RALT(KC_7)
+#define _M_BACKSLASH LSFT(RALT(KC_7))
 
 #define _BACKWARDS LCTL(KC_PGUP)
 #define _FORWARDS  LCTL(KC_PGDN)
@@ -52,8 +52,18 @@
 #define _L_TAB_LOWER LT(_L_LOWER, KC_TAB)
 #define _M_TAB_LOWER LT(_M_LOWER, KC_TAB)
 
-/* space normally, but (left) control when held down */
-#define _CTRL_SP MT(KC_LCTL, KC_SPC)
+/* esc normally, but (left) control when held down */
+#define _CTRL_ESC MT(MOD_LCTL, KC_ESC)
+
+/* space normally, but (left) control when held down */ // TODO: currently not being used
+#define _CTRL_SPC MT(MOD_LCTL, KC_SPC)
+
+/* right arrow normally, but (right) shift when held down */
+#define _SFT_RIGHT MT(MOD_RSFT, KC_RIGHT)
+
+/* left arrow normally, but (right) gui when held down */ // TODO: is gui a good key here, what about using ctrl?
+#define _GUI_LEFT  MT(MOD_RGUI, KC_LEFT)
+
 
 /* apple fn key (mapped to F20, needs to be software remapped) */
 #define _M_FN				 KC_F20
