@@ -2,10 +2,14 @@
 
 #undef RGBLIGHT_ANIMATIONS
 #define RGBLIGHT_EFFECT_BREATHING
-#define RGBLIGHT_EFFECT_CHRISTMAS
 #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+#define RGBLIGHT_EFFECT_RAINBOW_MOOD
 #define RGBLIGHT_EFFECT_SNAKE
 #define RGBLIGHT_EFFECT_STATIC_GRADIENT
+#define RGBLIGHT_EFFECT_TWINKLE
+
+/* this allows custom led indicators to be on while led effects are off */
+#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
 
 /* rgb lighting will be switched off when host goes to sleep */
 #define RGBLIGHT_SLEEP
@@ -15,12 +19,15 @@
 /* tap and hold (mod tap, layer tap; ) */
 #define RETRO_TAPPING
 #define PERMISSIVE_HOLD
-#define TAPPING_TERM 0
+#define TAPPING_TERM 100
 
 /* mouse speed & acceleration */
 #define MOUSEKEY_MAX_SPEED 10
 #define MOUSEKEY_INTERVAL 32
 #define MOUSEKEY_TIME_TO_MAX 40
+
+/* one shot */
+#define ONESHOT_TAP_TOGGLE 2
 
 /* led colors */
 #define LINUX_COLORS        RGB_PURPLE
@@ -41,6 +48,9 @@
 #define CAPSLOCK_INDICATOR
 #define OS_INDICATOR
 
+/* choose wether to have capslock or modtap key */
+// #define CAPSLOCK_KEY
+
 /* backslash key on both Linux and MacOS */
 #define _L_BACKSLASH RALT(KC_7)
 #define _M_BACKSLASH LSFT(RALT(KC_7))
@@ -58,12 +68,23 @@
 /* space normally, but (left) control when held down */ // TODO: currently not being used
 #define _CTRL_SPC MT(MOD_LCTL, KC_SPC)
 
+/* left arrow normally, but (right) gui when held down */
+#define _GUI_MINS  MT(MOD_RGUI, KC_MINS)
+
 /* right arrow normally, but (right) shift when held down */
-#define _SFT_RIGHT MT(MOD_RSFT, KC_RIGHT)
+#define _CTL_EQL MT(MOD_RCTL, KC_EQL)
 
-/* left arrow normally, but (right) gui when held down */ // TODO: is gui a good key here, what about using ctrl?
-#define _GUI_LEFT  MT(MOD_RGUI, KC_LEFT)
+/*one shot key which (in conjunction with userspace code) switches to lower layer and activates shift */
+#define _L_MT_S_LOWER OSL(_L_LOWER)
+#define _M_MT_S_LOWER OSL(_M_LOWER)
 
+#ifdef CAPSLOCK_KEY
+#define _L_CAPSLOCK KC_CAPS
+#define _M_CAPSLOCK KC_CAPS
+#else
+#define _L_CAPSLOCK _L_MT_S_LOWER
+#define _M_CAPSLOCK _M_MT_S_LOWER
+#endif
 
 /* apple fn key (mapped to F20, needs to be software remapped) */
 #define _M_FN				 KC_F20
