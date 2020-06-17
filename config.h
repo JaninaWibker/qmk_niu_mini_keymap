@@ -68,6 +68,9 @@
 /* space normally, but (left) control when held down */ // TODO: currently not being used
 #define _CTRL_SPC MT(MOD_LCTL, KC_SPC)
 
+/* enter normally, but (right) shift when held down */
+#define _RSFT_RET MT(MOD_RSFT, KC_ENT)
+
 /* left arrow normally, but (right) gui when held down */
 #define _GUI_MINS  MT(MOD_RGUI, KC_MINS)
 
