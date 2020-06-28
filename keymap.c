@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_L_BASE] = LAYOUT_planck_mit(
 		_CTRL_ESC,    KC_Q,    KC_W,     KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,        KC_P,      KC_BSPC,
 		_L_TAB_LOWER, KC_A,    KC_S,     KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,        KC_LBRC,   KC_RBRC,
-		KC_LSFT,      KC_Z,    KC_X,     KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,      KC_SLSH,   _RSFT_RET,
+		KC_LSFT,      KC_Z,    KC_X,     KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,      KC_SLSH,   KC_ENT,
 		KC_LCTL,      KC_LGUI, L_ADJUST, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, _L_CAPSLOCK, _GUI_MINS, _CTL_EQL),
 
 	/* Linux Lower
@@ -100,10 +100,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_L_LOWER] = LAYOUT_planck_mit(
-		KC_RCTL, KC_1,    	   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_KSPC,
-		KC_TRNS, _L_BACKSLASH, KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT,
-		KC_TRNS, RGB_VAD,			 RGB_VAI, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_DEL,
-		KC_TRNS, KC_TRNS,			 KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  KC_LEFT, KC_RIGHT),
+		KC_RCTL, KC_1,         KC_2,    KC_3,         KC_4,     KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_BSPC,
+		KC_TRNS, _L_BACKSLASH, KC_GRV,  _L_ASTERISKS, _L_SLASH, KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT,
+		KC_TRNS, RGB_VAD,      RGB_VAI, KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_DEL,
+		KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS,  KC_LEFT, KC_RIGHT),
 
 	/* Linux Raise
 	 * ,-----------------------------------------------------------------------------------.
@@ -153,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_M_BASE] = LAYOUT_planck_mit(
 		_CTRL_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,        KC_P,      KC_BSPC,
 		_M_TAB_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,        KC_LBRC,   KC_RBRC,
-		KC_LSFT,      KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,      KC_SLSH,   _RSFT_RET,
+		KC_LSFT,      KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,      KC_SLSH,   KC_ENT,
 		_M_FN,        KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, _M_CAPSLOCK, _GUI_MINS, _CTL_EQL),
 
 	/* MacOS Lower
@@ -168,10 +168,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------------------------------------------------------'
    */
 	[_M_LOWER] = LAYOUT_planck_mit(
-		KC_RCTL, 			KC_1,   		  KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_KSPC,
-		_M_TAB_LOWER, _M_BACKSLASH,	KC_GRV,  KC_MINS, KC_EQL,  KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT,
-		KC_TRNS, 			RGB_VAD,			RGB_VAI, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_DEL,
-		KC_TRNS, 			KC_TRNS,		  KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT,           KC_TRNS, KC_TRNS, KC_TRNS,  KC_LEFT, KC_RIGHT),
+		KC_RCTL, 			KC_1,         KC_2,    KC_3,         KC_4,     KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_BSPC,
+		_M_TAB_LOWER, _M_BACKSLASH, KC_GRV,  _M_ASTERISKS, _M_SLASH, KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_SCLN, KC_QUOT,
+		KC_TRNS, 			RGB_VAD,      RGB_VAI, KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,   KC_SLSH, KC_DEL,
+		KC_TRNS, 			KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS,  KC_LEFT, KC_RIGHT),
 
 	/* MacOS Raise
 	 * ,-----------------------------------------------------------------------------------.
@@ -455,7 +455,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if(record->event.pressed) {
 				user_config.info_mode = !user_config.info_mode;
 				eeconfig_update_user(user_config.raw);
-				#ifdef CONSOLE_ENABL
+				rgblight_set_effect_range(LED00, user_config.info_mode ? 8 : 14);
+				#ifdef CONSOLE_ENABLE
 					print("INF_TGL");
 					if(user_config.info_mode) print("on\n");
 					else 											print("off\n");

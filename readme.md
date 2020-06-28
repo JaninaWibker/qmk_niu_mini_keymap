@@ -14,9 +14,8 @@ For an overview of the layout see [this](http://www.keyboard-layout-editor.com/#
 - Page Up, Page Down, Insert, Delete, ...
 - Mouse support
 - Numberpad
-- LED integration (normal backlighting but also showing the state of the keyboard when "Info Toggle" is on; **not implemented yet**)
+- LED integration (normal backlighting but also showing the state of the keyboard when "Info Toggle" is on; **partially implemented**)
 - MacOS and Linux layouts (minor differences; requires software mapping of F20 to the apple fn key (which is pretty much [proprietary](https://github.com/qmk/qmk_firmware/issues/2179); this is a work around))
-- changing the default layer to any of the 3 other layers (useful for continious mouse or numberpad use for example; **not implemented yet**)
 
 ## LED setup (WIP)
 

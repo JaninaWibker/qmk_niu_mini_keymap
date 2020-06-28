@@ -55,6 +55,15 @@
 #define _L_BACKSLASH RALT(KC_7)
 #define _M_BACKSLASH LSFT(RALT(KC_7))
 
+
+/* slash key on both Linux and MacOS */
+#define _L_SLASH LSFT(KC_7)
+#define _M_SLASH LSFT(KC_7)
+
+/* asterisks key on both Linux and MacOS; assuming german layout */
+#define _L_ASTERISKS LSFT(KC_0)
+#define _M_ASTERISKS LSFT(KC_0) // potentially customize for usage with default osx-layout
+
 #define _BACKWARDS LCTL(KC_PGUP)
 #define _FORWARDS  LCTL(KC_PGDN)
 
@@ -69,7 +78,7 @@
 #define _CTRL_SPC MT(MOD_LCTL, KC_SPC)
 
 /* enter normally, but (right) shift when held down */
-#define _RSFT_RET MT(MOD_RSFT, KC_ENT)
+#define _RSFT_RET MT(MOD_RSFT, KC_ENT) // TODO: currently not being used
 
 /* left arrow normally, but (right) gui when held down */
 #define _GUI_MINS  MT(MOD_RGUI, KC_MINS)
