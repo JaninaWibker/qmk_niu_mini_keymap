@@ -188,7 +188,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11,
 		KC_LGUI, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC,    KC_RBRC,
 		KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH,    KC_F12,
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI),
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI,    RGB_SAI),
 
   /* MacOS Adjust
 	 * ,-----------------------------------------------------------------------------------.
@@ -219,6 +219,67 @@ void set_led(uint8_t r, uint8_t g, uint8_t b, uint8_t i) {
     // led[i].g = g;
     // led[i].b = b;
   }
+}
+
+void set_rgblight_by_layer(layer_state_t state) {
+	switch(biton32(state)) {
+		case _L_BASE:
+		case _M_BASE: {
+			#ifdef CONSOLE_ENABLE
+				print("layer:base\n");
+			#endif
+			set_led(LAYER_BASE_COLORS, LED13);
+			rgblight_set_effect_range(LED00, 14);
+		} break;
+		case _L_LOWER:
+		case _M_LOWER: {
+			#ifdef CONSOLE_ENABLE
+				print("layer:lower\n");
+			#endif
+			rgblight_set_effect_range(LED00, 8);
+			set_led(LAYER_LOWER_COLORS, LED08);
+			set_led(LAYER_LOWER_COLORS, LED09);
+			set_led(LAYER_LOWER_COLORS, LED10);
+			set_led(LAYER_LOWER_COLORS, LED11);
+			set_led(LAYER_LOWER_COLORS, LED12);
+			set_led(LAYER_LOWER_COLORS, LED13);
+		} break;
+		case _L_RAISE:
+		case _M_RAISE: {
+			#ifdef CONSOLE_ENABLE
+				print("layer:raise\n");
+			#endif
+			rgblight_set_effect_range(LED00, 8);
+			set_led(LAYER_RAISE_COLORS, LED08);
+			set_led(LAYER_RAISE_COLORS, LED09);
+			set_led(LAYER_RAISE_COLORS, LED10);
+			set_led(LAYER_RAISE_COLORS, LED11);
+			set_led(LAYER_RAISE_COLORS, LED12);
+			set_led(LAYER_RAISE_COLORS, LED13);
+		} break;
+		case _L_ADJUST:
+		case _M_ADJUST: {
+			#ifdef CONSOLE_ENABLE
+				print("layer:adjst\n");
+			#endif
+			rgblight_set_effect_range(LED00, 8);
+			set_led(LAYER_ADJUST_COLORS, LED08);
+			set_led(LAYER_ADJUST_COLORS, LED09);
+			set_led(LAYER_ADJUST_COLORS, LED10);
+			set_led(LAYER_ADJUST_COLORS, LED11);
+			set_led(LAYER_ADJUST_COLORS, LED12);
+			#ifdef OS_INDICATOR
+				if(!user_config.linux_mode) {
+					set_led(MACOS_COLORS, LED13);
+				} else {
+					set_led(LAYER_ADJUST_COLORS, LED13);
+				}
+			#else
+				set_led(LAYER_ADJUST_COLORS, LED13);
+			#endif
+		} break;
+	}
+	rgblight_set();
 }
 
 void suspend_power_down_user(void) {
@@ -279,42 +340,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     halfmin_counter = 0;
   }
 
-  #if defined(WPM_ENABLE) && defined(WPM_INDICATOR)
-
-    uint8_t wpm = get_current_wpm();
-
-    if(wpm < 20) {
-      set_led(WPM0_COLORS, LED08);
-      set_led(LED_OFF_COLORS, LED09);
-      set_led(LED_OFF_COLORS, LED10);
-      set_led(LED_OFF_COLORS, LED11);
-    } else if(wpm < 50) {
-      set_led(WPM1_COLORS, LED08);
-      set_led(WPM1_COLORS, LED09);
-      set_led(LED_OFF_COLORS, LED10);
-      set_led(LED_OFF_COLORS, LED11);
-    } else if(wpm < 80) {
-      set_led(WPM2_COLORS, LED08);
-      set_led(WPM2_COLORS, LED09);
-      set_led(WPM2_COLORS, LED10);
-      set_led(LED_OFF_COLORS, LED11);
-    } else {
-      set_led(WPM3_COLORS, LED08);
-      set_led(WPM3_COLORS, LED09);
-      set_led(WPM3_COLORS, LED10);
-      set_led(WPM3_COLORS, LED11);
-    }
-		rgblight_set();
-
-  #endif
-
-
-	/* Linux */
 	switch (keycode) {
-		case L_BASE:		if(record->event.pressed) {
-			// TODO: what to do here? (base layer)
-		}
-		return false;
+
     case L_LOWER:
 			if(record->event.pressed) {
 				layer_on(_L_LOWER);
@@ -359,31 +386,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 
-		case L_D_BASE:		if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
-
-		case L_D_LOWER:		if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
-
-		case L_D_RAISE:		if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
-
-		case L_D_ADJUST:	if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
-		
-		/* MacOS */
-		case M_BASE:		if(record->event.pressed) {
-			// TODO: what to do here? (base layer)
-		}
-		return false;
 
 		case M_LOWER:
 			if(record->event.pressed) {
@@ -429,25 +431,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 
-    case M_D_BASE:		if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
+		case RGB_HUI:
+		case RGB_HUD:
+		case RGB_SAI:
+		case RGB_SAD:
+		case RGB_VAI:
+		case RGB_VAD: {
+			if(record->event.pressed) {
 
-		case M_D_LOWER:		if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
+				process_rgb(keycode, record);
 
-		case M_D_RAISE:		if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
+				rgblight_set_effect_range(LED00, 0);
+				rgblight_sethsv_range(
+					rgblight_get_hue(),
+					rgblight_get_sat(),
+					rgblight_get_val(),
+					LED00,
+					LED13
+				);
 
-		case M_D_ADJUST:  if(record->event.pressed) {
-      // TODO: what to do here? (change default layer)
-		}
-		return false;
+				#ifdef CONSOLE_ENABLE
+					print("COLOR_UPDATE:showcasing new color\n");
+				#endif
+			}
+		} return false;
 
 
 		/* Info Toggle */
@@ -471,12 +478,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					print("LAYOUT: Mac\n");
 				#endif
 				user_config.linux_mode = false;
-				if(user_config.info_mode) {
-					#ifdef OS_INDICATOR
-						set_led(MACOS_COLORS, LED12);
-						rgblight_set();
-					#endif
-				}
 				set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
 			}
 		} break;
@@ -488,16 +489,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					print("LAYOUT: Linux\n");
 				#endif
 				user_config.linux_mode = true;
-				if(user_config.info_mode) {
-					#ifdef OS_INDICATOR
-						set_led(LINUX_COLORS, LED12);
-						rgblight_set();
-					#endif
-				}
 				set_single_persistent_default_layer(_L_BASE);
 			}
 		} break;
 	}
+
+
 	return true;
 }
 
@@ -507,56 +504,7 @@ layer_state_t layer_state_set_user(layer_state_t state) { // TODO: add correct c
 			#ifdef CONSOLE_ENABLE
 				print("info_mode:on");
 			#endif
-      switch(biton32(state)) {
-        case _L_BASE:
-				case _M_BASE: {
-					#ifdef CONSOLE_ENABLE
-						print("layer:base\n");
-					#endif
-          set_led(LAYER_BASE_COLORS, LED13);
-					rgblight_set_effect_range(LED00, 14);
-        } break;
-        case _L_LOWER:
-				case _M_LOWER: {
-					#ifdef CONSOLE_ENABLE
-						print("layer:lower\n");
-					#endif
-					rgblight_set_effect_range(LED00, 8);
-					set_led(LAYER_LOWER_COLORS, LED08);
-					set_led(LAYER_LOWER_COLORS, LED09);
-					set_led(LAYER_LOWER_COLORS, LED10);
-					set_led(LAYER_LOWER_COLORS, LED11);
-					set_led(LAYER_LOWER_COLORS, LED12);
-					set_led(LAYER_LOWER_COLORS, LED13);
-        } break;
-        case _L_RAISE:
-				case _M_RAISE: {
-					#ifdef CONSOLE_ENABLE
-						print("layer:raise\n");
-					#endif
-					rgblight_set_effect_range(LED00, 8);
-					set_led(LAYER_RAISE_COLORS, LED08);
-					set_led(LAYER_RAISE_COLORS, LED09);
-					set_led(LAYER_RAISE_COLORS, LED10);
-					set_led(LAYER_RAISE_COLORS, LED11);
-					set_led(LAYER_RAISE_COLORS, LED12);
-					set_led(LAYER_RAISE_COLORS, LED13);
-        } break;
-        case _L_ADJUST:
-				case _M_ADJUST: {
-					#ifdef CONSOLE_ENABLE
-						print("layer:adjst\n");
-					#endif
-					rgblight_set_effect_range(LED00, 8);
-          set_led(LAYER_ADJUST_COLORS, LED08);
-          set_led(LAYER_ADJUST_COLORS, LED09);
-          set_led(LAYER_ADJUST_COLORS, LED10);
-          set_led(LAYER_ADJUST_COLORS, LED11);
-          set_led(LAYER_ADJUST_COLORS, LED12);
-          set_led(LAYER_ADJUST_COLORS, LED13);
-        } break;
-      }
-			rgblight_set();
+      set_rgblight_by_layer(state);
     } else {
 			#ifdef CONSOLE_ENABLE
 				print("info_mode:off\n");
