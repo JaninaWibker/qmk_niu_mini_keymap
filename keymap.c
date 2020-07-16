@@ -14,54 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include QMK_KEYBOARD_H
-#ifdef CONSOLE_ENABLE
-#include <print.h>
-#define _print(str) print(str)
-#elif
-#define _print(str) (void)0
-#endif
-
-
-enum leds {
-  LED00, LED01, LED02,
-  LED03, LED04, LED05,
-  LED06, LED07, LED08,
-  LED09, LED10, LED11,
-  LED12, LED13
-};
-
-enum layers {
-  /* Linux layers */
-  _L_BASE, _L_LOWER, _L_RAISE, _L_ADJUST,
-
-  /* MacOS layers */
-  _M_BASE, _M_LOWER, _M_RAISE, _M_ADJUST
-};
-
-enum keycodes {
-  /* toggle additional information via rgb leds ON/OFF */
-  INF_TGL = SAFE_RANGE,
-
-  /* switch from Linux layout to MacOS layout */
-  L_TO_M,
-  /* switch from MacOs layout to Linux layout */
-  M_TO_L,
-
-  /* Linux layer switches */
-  L_BASE, L_LOWER, L_RAISE, L_ADJUST,
-
-  /* MacOS layer switches */
-  M_BASE, M_LOWER, M_RAISE, M_ADJUST
-};
-
-typedef union {
-  uint32_t raw;
-  struct {
-    bool info_mode :1;
-    bool linux_mode :1;
-  };
-} user_config_t;
+#include "keymap.h"
 
 user_config_t user_config;
 
@@ -210,12 +163,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void set_led(uint8_t r, uint8_t g, uint8_t b, uint8_t i) {
   if (i < RGBLED_NUM) {
     rgblight_setrgb_at(r, g, b, i);
-    // #ifdef CONSOLE_ENABLE
-    //  printf("set_led:%d,%d,%d,%d", r, g, b, i);
-    // #endif
-    // led[i].r = r;
-    // led[i].g = g;
-    // led[i].b = b;
   }
 }
 
@@ -223,7 +170,7 @@ void set_rgblight_by_layer(layer_state_t state) {
   switch(biton32(state)) {
     case _L_BASE:
     case _M_BASE: {
-        _print("layer:base\n");
+      _print("layer:base\n");
       set_led(LAYER_BASE_COLORS, LED13);
       rgblight_set_effect_range(LED00, 14);
     } break;
@@ -290,7 +237,7 @@ void eeconfig_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-  if(record->event.pressed) {
+  if(record->event.pressed) { // what is this needed for?
     #ifdef BACKLIGHT_ENABLE
       if(led_on == false) {
         backlight_enable();
