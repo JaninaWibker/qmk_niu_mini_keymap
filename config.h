@@ -43,6 +43,10 @@
 #define LAYER_RAISE_COLORS  RGB_GREEN
 #define LAYER_ADJUST_COLORS RGB_RED
 
+#define LAYER_VIM_INSERT_COLORS RGB_MAGENTA
+#define LAYER_VIM_NORMAL_COLORS RGB_PINK
+#define LAYER_VIM_VISUAL_COLORS RGB_GREEN
+
 /* #define WPM_INDICATOR */
 #define LAYER_INDICATOR
 #define CAPSLOCK_INDICATOR
@@ -85,6 +89,15 @@
 
 /* right arrow normally, but (right) shift when held down */
 #define _CTL_EQL MT(MOD_RCTL, KC_EQL)
+
+/* wether to enable vim emulation mode
+  (this is an extra layer which allows to use some vim like commands
+  (or rather 2 layers for each operating system => 4 layers))
+*/
+#define ENABLE_VIM_MODE
+
+/* this makes sure that layer_state_set_user is called when vim changes mode */
+#define VIM_CALL_LAYER_STATE_CHANGE_ON_MODE_SWITCH
 
 /*one shot key which (in conjunction with userspace code) switches to lower layer and activates shift */
 #define _L_MT_S_LOWER OSL(_L_LOWER)

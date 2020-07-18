@@ -37,7 +37,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _CTRL_ESC,    KC_Q,    KC_W,     KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,        KC_P,      KC_BSPC,
     _L_TAB_LOWER, KC_A,    KC_S,     KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,        KC_LBRC,   KC_RBRC,
     KC_LSFT,      KC_Z,    KC_X,     KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,      KC_SLSH,   KC_ENT,
-    KC_LCTL,      KC_LGUI, L_ADJUST, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, _L_CAPSLOCK, _GUI_MINS, _CTL_EQL),
+    KC_LCTL,      KC_LGUI, L_ADJUST, KC_LALT, L_RAISE, KC_SPC,     L_LOWER, KC_RALT, _L_CAPSLOCK, _GUI_MINS, _CTL_EQL
+  ),
+
+  [_L_VIM_INSERT] = LAYOUT_planck_mit(
+    VIM_NORMAL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+  ),
+
+  [_L_VIM_NORMAL] = LAYOUT_planck_mit(
+    VIM_ESC,   KC_NO,   VIM_W,   VIM_E,   KC_NO,   KC_NO,     VIM_Y,   VIM_U,   VIM_I,     VIM_O,      VIM_P,   KC_NO,
+    KC_TRNS,   VIM_A,   VIM_S,   VIM_D,   KC_NO,   VIM_G,     VIM_H,   VIM_J,   VIM_K,     VIM_L,      KC_NO,   KC_NO,
+    VIM_SHIFT, KC_NO,   VIM_X,   VIM_C,   VIM_V,   VIM_B,     KC_NO,   KC_NO,   VIM_COMMA, VIM_PERIOD, KC_NO,   VIM_ENTER,
+    KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, VIM_SPACE,          KC_TRNS, KC_TRNS,   KC_TRNS,    KC_TRNS, KC_TRNS
+  ),
 
   /* Linux Lower
    * ,-----------------------------------------------------------------------------------.
@@ -54,7 +69,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_RCTL, KC_1,         KC_2,    KC_3,         KC_4,     KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TRNS, _L_BACKSLASH, KC_GRV,  _L_ASTERISKS, _L_SLASH, KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, KC_QUOT,
     KC_TRNS, RGB_VAD,      RGB_VAI, KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
-    KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT),
+    KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT
+  ),
 
   /* Linux Raise
    * ,-----------------------------------------------------------------------------------.
@@ -71,7 +87,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,
     KC_LGUI, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC, KC_RBRC,
     KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH, KC_F12,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI),
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI
+  ),
 
   /* Linux Adjust
    * ,-----------------------------------------------------------------------------------.
@@ -81,14 +98,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|------+------+------+------+------+------|
    * | Shift| RGB T| Cycle| InfT |  Mac |  Esc | Bksp |   7  |   8  |   9  |Enter | Bckw |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * |Adjust| Ctrl | Super|  Alt | Raise|    Space    |Lower |   0  |   .  |AltGr | Adjst|
+   * |Adjust| Ctrl | Super|  Alt | Raise|    Space    |Lower |   0  |   .  |AltGr | Vim  |
    * `-----------------------------------------------------------------------------------'
    */
   [_L_ADJUST] = LAYOUT_planck_mit(
     DEBUG,  KC_BTN1, KC_MS_U,           KC_BTN2, KC_WH_U, RESET,  KC_PSLS,  KC_P1,   KC_P2, KC_P3,   KC_PMNS, RESET,
     KC_BTN3,  KC_MS_L, KC_MS_D,         KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5, KC_P6,   KC_PPLS, _FORWARDS,
     KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, INF_TGL, L_TO_M,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8, KC_P9,   KC_PENT, _BACKWARDS,
-    KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0, KC_PDOT, KC_RALT, L_ADJUST),
+    KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0, KC_PDOT, KC_RALT, VIM_NORMAL
+  ),
+
 
   /* MacOS - Base
    * ,-----------------------------------------------------------------------------------.
@@ -105,7 +124,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _CTRL_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, KC_Y, KC_U,    KC_I,    KC_O,        KC_P,      KC_BSPC,
     _M_TAB_LOWER, KC_A,    KC_S,    KC_D,    KC_F,    KC_G, KC_H, KC_J,    KC_K,    KC_L,        KC_LBRC,   KC_RBRC,
     KC_LSFT,      KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_N, KC_M,    KC_COMM, KC_DOT,      KC_SLSH,   KC_ENT,
-    _M_FN,        KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, _M_CAPSLOCK, _GUI_MINS, _CTL_EQL),
+    _M_FN,        KC_LCTL, KC_LALT, KC_LGUI, M_RAISE, KC_SPC,     M_LOWER, KC_RALT, _M_CAPSLOCK, _GUI_MINS, _CTL_EQL
+  ),
+
+  [_M_VIM_INSERT] = LAYOUT_planck_mit(
+    VIM_NORMAL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+  ),
+
+  [_M_VIM_NORMAL] = LAYOUT_planck_mit(
+    VIM_ESC,   KC_NO,   VIM_W,   VIM_E,   KC_NO,   KC_NO,     VIM_Y,   VIM_U,   VIM_I,     VIM_O,      VIM_P,   KC_NO,
+    KC_TRNS,   VIM_A,   VIM_S,   VIM_D,   KC_NO,   VIM_G,     VIM_H,   VIM_J,   VIM_K,     VIM_L,      KC_NO,   KC_NO,
+    VIM_SHIFT, KC_NO,   VIM_X,   VIM_C,   VIM_V,   VIM_B,     KC_NO,   KC_NO,   VIM_COMMA, VIM_PERIOD, KC_NO,   VIM_ENTER,
+    KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, VIM_SPACE,          KC_TRNS, KC_TRNS,   KC_TRNS,    KC_TRNS, KC_TRNS
+  ),
 
   /* MacOS Lower
    * ,-----------------------------------------------------------------------------------.
@@ -122,7 +156,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_RCTL,      KC_1,         KC_2,    KC_3,         KC_4,     KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     _M_TAB_LOWER, _M_BACKSLASH, KC_GRV,  _M_ASTERISKS, _M_SLASH, KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, KC_QUOT,
     KC_TRNS,      RGB_VAD,      RGB_VAI, KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
-    KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT),
+    KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT
+  ),
 
   /* MacOS Raise
    * ,-----------------------------------------------------------------------------------.
@@ -139,7 +174,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,
     KC_LGUI, KC_VOLD, KC_UP,   KC_VOLU, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT,  KC_LBRC, KC_RBRC,
     KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,   KC_SLSH, KC_F12,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI),
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, KC_TRNS,  RGB_HUI, RGB_SAI
+  ),
 
   /* MacOS Adjust
    * ,-----------------------------------------------------------------------------------.
@@ -149,16 +185,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|------+------+------+------+------+------|
    * | Shift| RGB T| Cycle| InfT | Linux|  Esc | Bksp |   7  |   8  |   9  |Enter | Bckw |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * |  Fn  | Ctrl |  Alt | Super| Raise|    Space    |Lower |   0  |   .  |AltGr | Adjst|
+   * |  Fn  | Ctrl |  Alt | Super| Raise|    Space    |Lower |   0  |   .  |AltGr | Vim  |
    * `-----------------------------------------------------------------------------------'
    */
   [_M_ADJUST] = LAYOUT_planck_mit(
     DEBUG,   KC_BTN1, KC_MS_U,          KC_BTN2, KC_WH_U, KC_DEL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, RESET,
     KC_BTN3, KC_MS_L, KC_MS_D,          KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS, _FORWARDS,
     KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, INF_TGL, M_TO_L,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT, _BACKWARDS,
-    KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, M_ADJUST)
+    KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, VIM_NORMAL
+  )
 
 };
+
+extern bool is_mac(void) {
+  return !user_config.linux_mode;
+}
+
+extern uint8_t vim_cmd_layer(void) {
+  return user_config.linux_mode ? _L_VIM_NORMAL : _M_VIM_NORMAL;
+}
+
+extern uint8_t vim_insert_layer(void) {
+  return user_config.linux_mode ? _L_VIM_INSERT : _M_VIM_INSERT;
+}
 
 void set_led(uint8_t r, uint8_t g, uint8_t b, uint8_t i) {
   if (i < RGBLED_NUM) {
@@ -206,15 +255,54 @@ void set_rgblight_by_layer(layer_state_t state) {
       set_led(LAYER_ADJUST_COLORS, LED11);
       set_led(LAYER_ADJUST_COLORS, LED12);
       #ifdef OS_INDICATOR
-        if(!user_config.linux_mode) {
-          set_led(MACOS_COLORS, LED13);
-        } else {
+        if(user_config.linux_mode) {
           set_led(LAYER_ADJUST_COLORS, LED13);
+        } else {
+          set_led(MACOS_COLORS, LED13);
         }
       #else
         set_led(LAYER_ADJUST_COLORS, LED13);
       #endif
     } break;
+
+    case _L_VIM_INSERT:
+    case _M_VIM_INSERT: {
+      _print("layer:vim_insert\n");
+      rgblight_set_effect_range(LED00, 8);
+      set_led(LAYER_VIM_INSERT_COLORS, LED08);
+      set_led(LAYER_VIM_INSERT_COLORS, LED09);
+      set_led(LAYER_VIM_INSERT_COLORS, LED10);
+      set_led(LAYER_VIM_INSERT_COLORS, LED11);
+      set_led(LAYER_VIM_INSERT_COLORS, LED12);
+    } break;
+
+    case _L_VIM_NORMAL:
+    case _M_VIM_NORMAL: {
+      switch(vstate) {
+        case VIM_NORMAL: {
+          _print("layer:vim_normal\n");
+          rgblight_set_effect_range(LED00, 8);
+          set_led(LAYER_VIM_NORMAL_COLORS, LED08);
+          set_led(LAYER_VIM_NORMAL_COLORS, LED09);
+          set_led(LAYER_VIM_NORMAL_COLORS, LED10);
+          set_led(LAYER_VIM_NORMAL_COLORS, LED11);
+          set_led(LAYER_VIM_NORMAL_COLORS, LED12);
+          set_led(LAYER_VIM_NORMAL_COLORS, LED13);
+        } break;
+        case VIM_V:
+        case VIM_VS: {
+          _print("layer:vim_visual\n");
+          rgblight_set_effect_range(LED00, 8);
+          set_led(LAYER_VIM_VISUAL_COLORS, LED08);
+          set_led(LAYER_VIM_VISUAL_COLORS, LED09);
+          set_led(LAYER_VIM_VISUAL_COLORS, LED10);
+          set_led(LAYER_VIM_VISUAL_COLORS, LED11);
+          set_led(LAYER_VIM_VISUAL_COLORS, LED12);
+          set_led(LAYER_VIM_VISUAL_COLORS, LED13);
+        } break;
+      }
+    }
+
   }
   rgblight_set();
 }
@@ -245,6 +333,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     #endif
   }
+
+  #ifdef ENABLE_VIM_MODE
+
+  bool was_handled_by_vim = !handle_vim_keycodes(keycode, record);
+
+  if(was_handled_by_vim) {
+    return false;
+  }
+
+  #endif
 
   switch (keycode) {
 
@@ -374,7 +472,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) { // TODO: add correct colors
+layer_state_t layer_state_set_user(layer_state_t state) {
   #ifdef LAYER_INDICATOR
     if(user_config.info_mode) {
       _print("info_mode:on");
