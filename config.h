@@ -68,6 +68,10 @@
 #define _L_ASTERISKS LSFT(KC_0)
 #define _M_ASTERISKS LSFT(KC_0) // potentially customize for usage with default osx-layout
 
+/* dollar sign on both Linux and MaxOS; assuming german layout */
+#define _L_DOLLAR LSFT(KC_4)
+#define _M_DOLLAR LSFT(KC_4)
+
 #define _BACKWARDS LCTL(KC_PGUP)
 #define _FORWARDS  LCTL(KC_PGDN)
 

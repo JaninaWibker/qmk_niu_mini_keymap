@@ -38,7 +38,10 @@ enum keycodes {
   L_BASE, L_LOWER, L_RAISE, L_ADJUST,
 
   /* MacOS layer switches */
-  M_BASE, M_LOWER, M_RAISE, M_ADJUST
+  M_BASE, M_LOWER, M_RAISE, M_ADJUST,
+
+  /* vol down / vol up or prev / next song if shift is pressed */
+  _L_VD_P, _M_VD_P, _L_VU_N, _M_VU_N
 };
 
 typedef union {
