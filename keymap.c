@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_L_LOWER] = LAYOUT_planck_mit(
     KC_RCTL, KC_1,         KC_2,    KC_3,         KC_4,     KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TRNS, _L_BACKSLASH, KC_GRV,  _L_ASTERISKS, _L_SLASH, KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, KC_QUOT,
-    KC_TRNS, _L_DOLLAR,    KC_TAB,  KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
+    KC_TRNS, _L_DOLLAR,    KC_DEL,  KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
     KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT
   ),
 
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_L_RAISE] = LAYOUT_planck_mit(
     KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-    KC_LGUI, _L_VD_P, KC_UP,   _L_VU_N, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT, KC_LBRC, KC_RBRC,
+    KC_LGUI, _L_VD_P, KC_UP,   _L_VU_N, KC_MPLY, KC_TAB,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT, KC_LBRC, KC_RBRC,
     KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,  KC_SLSH, KC_F12,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, RGB_VAI, RGB_HUI, RGB_SAI
   ),
@@ -155,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_M_LOWER] = LAYOUT_planck_mit(
     KC_RCTL,      KC_1,         KC_2,    KC_3,         KC_4,     KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     _M_TAB_LOWER, _M_BACKSLASH, KC_GRV,  _M_ASTERISKS, _M_SLASH, KC_BSLS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, KC_QUOT,
-    KC_TRNS,      _M_DOLLAR,    KC_TAB,  KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
+    KC_TRNS,      _M_DOLLAR,    KC_DEL,  KC_INS,       KC_HOME,  KC_PGDN, KC_PGUP, KC_END,  KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
     KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS,      KC_TRNS,  KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT
   ),
 
@@ -172,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_M_RAISE] = LAYOUT_planck_mit(
     KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-    KC_LGUI, _M_VD_P, KC_UP,   _L_VU_N, KC_MPLY, KC_GRV,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT, KC_LBRC, KC_RBRC,
+    KC_LGUI, _M_VD_P, KC_UP,   _L_VU_N, KC_MPLY, KC_TAB,  KC_MINS, KC_EQL,  KC_SCLN, KC_QUOT, KC_LBRC, KC_RBRC,
     KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE, KC_ESC,  KC_ENT,  KC_BSLS, KC_COMM, KC_DOT,  KC_SLSH, KC_F12,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,          KC_TRNS, KC_TRNS, RGB_VAI, RGB_HUI, RGB_SAI
   ),
@@ -439,10 +439,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
       if(record->event.pressed) {
         if(shifted) {
-          _print("PRV\n");
+          unregister_code(KC_LSFT);
           register_code(KC_MPRV);
+          register_code(KC_LSFT);
         } else {
-          _print("VD\n");
           register_code(KC_VOLD);
         }
       } else {
@@ -457,10 +457,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
       if(record->event.pressed) {
         if(shifted) {
-          _print("NXT\n");
+          unregister_code(KC_LSFT);
           register_code(KC_MNXT);
+          register_code(KC_LSFT);
         } else {
-          _print("VU\n");
           register_code(KC_VOLU);
         }
       } else {
