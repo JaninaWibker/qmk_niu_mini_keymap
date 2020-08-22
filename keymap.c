@@ -215,6 +215,15 @@ void set_led(uint8_t r, uint8_t g, uint8_t b, uint8_t i) {
   }
 }
 
+/* print 8-bit number */
+void _iprint(char n) {
+  #ifdef CONSOLE_ENABLE
+    xputc((char) (n / 100 + 48));
+    xputc((char) ((n % 100) / 10 + 48));
+    xputc((char) ((n % 10) / 1 + 48));
+  #endif
+}
+
 void set_rgblight_by_layer(layer_state_t state) {
   switch(biton32(state)) {
     case _L_BASE:
@@ -321,6 +330,7 @@ void eeconfig_init_user(void) {
   user_config.raw = 0;
   user_config.linux_mode = true; // linux mode by default
   eeconfig_update_user(user_config.raw);
+  rgblight_sethsv(192, 255, 255); // set default led color
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -477,16 +487,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
     /* Info Toggle */
-    case INF_TGL: {
+    case INF_TGL: { // toggle if keyboard state is displayed through LEDs; if shift is pressed print debug information to console
       if(record->event.pressed) {
-        user_config.info_mode = !user_config.info_mode;
-        eeconfig_update_user(user_config.raw);
-        rgblight_set_effect_range(LED00, user_config.info_mode ? 8 : 14);
-        #ifdef CONSOLE_ENABLE
-          print("INF_TGL");
-          if(user_config.info_mode) print("on\n");
-          else                      print("off\n");
-        #endif
+        uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
+        if(shifted) {
+          _print("OS:");
+          if(user_config.linux_mode) _print("L");
+          else                       _print("M");
+          _print(",INF:");
+          if(user_config.info_mode) _print("on,");
+          else                      _print("off,");
+          _print("RGB hue,sat,val,mode: ");
+          _iprint(rgblight_get_hue());
+          _print(",");
+          _iprint(rgblight_get_sat());
+          _print(",");
+          _iprint(rgblight_get_val());
+          _print(",");
+          _iprint(rgblight_get_mode());
+          _print("\n");
+        } else {
+          user_config.info_mode = !user_config.info_mode;
+          eeconfig_update_user(user_config.raw);
+          rgblight_set_effect_range(LED00, user_config.info_mode ? 8 : 14);
+          #ifdef CONSOLE_ENABLE
+            print("INF_TGL");
+            if(user_config.info_mode) print("on\n");
+            else                      print("off\n");
+          #endif
+        }
       }
     } break;
 
@@ -495,6 +524,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if(record->event.pressed) {
         _print("OS: Mac\n");
         user_config.linux_mode = false;
+        eeconfig_update_user(user_config.raw);
         set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
       }
     } break;
@@ -504,6 +534,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if(record->event.pressed) {
         _print("OS: Linux\n");
         user_config.linux_mode = true;
+        eeconfig_update_user(user_config.raw);
         set_single_persistent_default_layer(_L_BASE);
       }
     } break;
