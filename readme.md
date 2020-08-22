@@ -2,9 +2,9 @@
 
 This is my personal layout for the niu mini. It uses 4 different layers (base, lower, raise, adjust). Many of the features are a combination of different layouts and designs such as the planck but also the signum 3 by Troy Fetcher.
 
-For an overview of the layout see [this](http://www.keyboard-layout-editor.com/#/gists/681891570020fad2fdec17477216f398)
+For an overview of the layout see [this](https://www.keyboard-layout-editor.com/#/gists/681891570020fad2fdec17477216f398)
 
-<a href="http://www.keyboard-layout-editor.com/#/gists/681891570020fad2fdec17477216f398"><img src="./layout.png" width="384px" alt="layout" /></a>
+<a href="https://www.keyboard-layout-editor.com/#/gists/681891570020fad2fdec17477216f398"><img src="./layout.png" width="384px" alt="layout" /></a>
 
 > the center legend shows normal keypress, followed by shifted keypress (most of the time). Keys below that are usually accessible via Alt(Gr) and are followed by their shifted counterparts. Sometimes descriptions are too long and need line wrapping. For the media controls the line below is accessed via Shift not Alt(Gr). If the bottom text is done in a different color it usually means that this functionality is accessed by pressing the key instead of tapping it. "Num" is the exception, it just signals that the numberpad keys are used instead of the normal ones.
 
