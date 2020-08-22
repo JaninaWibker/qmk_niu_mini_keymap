@@ -366,10 +366,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case L_LOWER:
       if(record->event.pressed) {
         layer_on(_L_LOWER);
-        _print("L_LOWER down\n");
       } else {
         layer_off(_L_LOWER);
-        _print("L_LOWER up\n");
       }
       update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
       return false;
@@ -377,20 +375,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case L_RAISE:
       if(record->event.pressed) {
         layer_on(_L_RAISE);
-        _print("L_RAISE down\n");
       } else {
         layer_off(_L_RAISE);
-        _print("L_RAISE up\n");
       }
       update_tri_layer(_L_LOWER, _L_RAISE, _L_ADJUST);
       return false;
 
     case L_ADJUST:
       if(record->event.pressed) {
-        _print("L_ADJST down\n");
         layer_on(_L_ADJUST);
       } else {
-        _print("L_ADJST up\n");
         layer_off(_L_ADJUST);
       }
       return false;
@@ -398,10 +392,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case M_LOWER:
       if(record->event.pressed) {
-        _print("M_LOWER down\n");
         layer_on(_M_LOWER);
       } else {
-        _print("M_LOWER up\n");
         layer_off(_M_LOWER);
       }
       update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
@@ -409,10 +401,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         
     case M_RAISE:
       if(record->event.pressed) {
-        _print("M_RAISE down\n");
         layer_on(_M_RAISE);
       } else {
-        _print("M_RAISE up\n");
         layer_off(_M_RAISE);
       }
       update_tri_layer(_M_LOWER, _M_RAISE, _M_ADJUST);
@@ -420,10 +410,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case M_ADJUST:
       if(record->event.pressed) {
-        _print("M_ADJST down\n");
         layer_on(_M_ADJUST);
       } else {
-        _print("M_ADJST up\n");
         layer_off(_M_ADJUST);
       }
       return false;
@@ -447,7 +435,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           LED13
         );
 
-        _print("COLOR_UPDATE:showcasing new color\n");
+        _print("rgb_showcase\n");
       }
     } return false;
 
@@ -505,7 +493,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* Switch from Linux to MacOS */
     case L_TO_M: {
       if(record->event.pressed) {
-        _print("LAYOUT: Mac\n");
+        _print("OS: Mac\n");
         user_config.linux_mode = false;
         set_single_persistent_default_layer(_M_BASE); // TODO: integrate in user_config?
       }
@@ -514,7 +502,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* Switch from MacOS to Linux */
     case M_TO_L: {
       if(record->event.pressed) {
-        _print("LAYOUT: Linux\n");
+        _print("OS: Linux\n");
         user_config.linux_mode = true;
         set_single_persistent_default_layer(_L_BASE);
       }
@@ -528,10 +516,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   #ifdef LAYER_INDICATOR
     if(user_config.info_mode) {
-      _print("info_mode:on");
       set_rgblight_by_layer(state);
-    } else {
-      _print("info_mode:off\n");
     }
   #endif
   return state;
