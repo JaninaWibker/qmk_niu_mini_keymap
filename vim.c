@@ -54,8 +54,7 @@ static void ALT(uint16_t keycode) {
 }
 
 static void edit(void) {
-  vstate = VIM_NORMAL;
-  // this isn't going into "normal mode". 
+  vstate = VIM_NORMAL;  // this isn't going into "normal mode".
   // Insert mode is different from all other modes as it is achieved by actual qmk layers
   // instead of just the vstate variable. The whole vim emulation is split into two layers
   // (or group of layers) which are the normal layer(s) and the seperate vim layer.
@@ -77,24 +76,28 @@ static void change_state(uint16_t new_state) {
 static void shifted_movement(uint16_t keycode) {
   switch(keycode) {
     case VIM_W: {
-      PRESS(KC_LSHIFT);
+      PRESS(KC_LSFT);
         PRESS(KC_LALT);
           TAP(KC_RIGHT);
           TAP(KC_RIGHT);
           TAP(KC_LEFT);
         RELEASE(KC_LALT);
         TAP(KC_RIGHT);
-      RELEASE(KC_LSHIFT);
+      RELEASE(KC_LSFT);
     } break;
     case VIM_B: {
-      PRESS(KC_LALT);
-        SHIFT(KC_LEFT);
-      RELEASE(KC_LALT);
+      PRESS(KC_LSFT);
+        TAP(KC_LEFT);
+        ALT(KC_LEFT);
+        TAP(KC_RIGHT);
+      RELEASE(KC_LSFT);
     } break;
     case VIM_E: {
-      PRESS(KC_LALT);
-        TAP(KC_RIGHT);
-      RELEASE(KC_LALT);
+      PRESS(KC_LSFT);
+        PRESS(KC_LALT);
+          TAP(KC_RIGHT);
+        RELEASE(KC_LALT);
+      RELEASE(KC_LSFT);
     } break;
     case VIM_H: {
       SHIFT(KC_LEFT);
@@ -242,20 +245,21 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
         case VIM_A: {
           if(SHIFTED) {
             TAP(KC_END);
-          } else {
-            TAP(KC_RIGHT);
           }
           edit();
         } break;
         case VIM_I: {
           if(SHIFTED) {
             TAP(KC_HOME);
+          } else {
+            TAP(KC_LEFT);
           }
           edit();
         } break;
 
         case VIM_C: {
           if(SHIFTED) {
+            TAP(KC_LEFT);
             SHIFT(KC_END);
             cut();
             edit();
@@ -283,7 +287,9 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
         } break;
 
         case VIM_B: {
+          TAP(KC_LEFT);
           ALT(KC_LEFT);
+          TAP(KC_RIGHT);
         } break;
         case VIM_W: {
           PRESS(KC_LALT);
@@ -291,16 +297,17 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
             TAP(KC_RIGHT);
             TAP(KC_LEFT);
           RELEASE(KC_LALT);
+          TAP(KC_RIGHT);
         } break;
         case VIM_E: {
-          if(SHIFTED) {
-            ALT(KC_RIGHT);
-          } else { // deviating from vim standard: shifted e is inverse of non-shifted e
+          if(SHIFTED) { // deviating from vim standard: shifted e is inverse of w
             PRESS(KC_LALT);
               TAP(KC_LEFT);
               TAP(KC_LEFT);
               TAP(KC_RIGHT);
             RELEASE(KC_LALT);
+          } else {
+            ALT(KC_RIGHT);
           }
         } break;
 
@@ -393,6 +400,7 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
 
         case VIM_ESC:
         case VIM_V: {
+          TAP(KC_ESC); // remove selection
           change_state(VIM_NORMAL);
         } break;
 
@@ -421,18 +429,20 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
 
         case VIM_B: {
           PRESS(KC_LSHIFT);
+          TAP(KC_LEFT);
           ALT(KC_LEFT);
+          TAP(KC_RIGHT);
           RELEASE(KC_LSHIFT);
           
         } break;
         case VIM_W: {
           PRESS(KC_LSHIFT);
-          PRESS(KC_LALT);
-          TAP(KC_RIGHT);
-          TAP(KC_RIGHT);
-          TAP(KC_LEFT);
-          RELEASE(KC_LALT);
-          TAP(KC_RIGHT);
+            PRESS(KC_LALT);
+              TAP(KC_RIGHT);
+              TAP(KC_RIGHT);
+              TAP(KC_LEFT);
+            RELEASE(KC_LALT);
+            TAP(KC_RIGHT);
           RELEASE(KC_LSHIFT);
         } break;
         case VIM_E: {
@@ -464,8 +474,8 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
       switch(keycode) {
         case VIM_W: {
           PRESS(KC_LALT);
-          TAP(KC_LEFT);
-          SHIFT(KC_RIGHT);
+            TAP(KC_LEFT);
+            SHIFT(KC_RIGHT);
           RELEASE(KC_LALT);
         } break;
         default: {
@@ -480,6 +490,7 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
       switch(keycode) {
         case VIM_V:
         case VIM_ESC: {
+          TAP(KC_ESC); // remove selection
           change_state(VIM_NORMAL);
         } break;
 
@@ -521,7 +532,8 @@ void raw_handle_vim_keycodes(uint16_t keycode) {
         case VIM_J:
         case VIM_K:
         case VIM_L: {
-          shifted_movement(keycode);
+          if(keycode == VIM_W)  shifted_movement(VIM_E); // "cw" acts the same as "ce"
+          else                  shifted_movement(keycode);
           cut();
           yank_was_lines = false;
           edit();
