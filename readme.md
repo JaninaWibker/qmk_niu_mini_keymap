@@ -21,10 +21,11 @@ For an overview of the layout see [this](http://www.keyboard-layout-editor.com/#
 - all normal keys and characters (I personally use an almost completely custom xkb layout, it could be that without it some characters are missing on ISO layouts duo to the missing key ANSI boards have that I had to accomodate previously with the xkb layout)
 - arrow keys
 - F1 to F12
-- Page Up, Page Down, Insert, Delete, ... (with the exception of print screen, break, scroll lock and num lock **all** keys on a normal 104-key keyboard are present, with a few extra ones added on top)
+- Page Up, Page Down, Insert, Delete, ... (with the exception of break/pause and scroll lock **all** keys on a normal 104-key keyboard are present, with a few extra ones added on top)
 - mouse support
 - full numberpad
 - media controls
+- vim emulation (based on [xton's vim emulation](https://github.com/qmk/qmk_firmware/tree/master/users/xtonhasvim); **still WIP**)
 - LED integration (normal backlighting but also showing the state of the keyboard when "Info Toggle" is on)
 - MacOS and Linux layouts (minor differences; requires software mapping of F20 to the apple fn key (which is pretty much [proprietary](https://github.com/qmk/qmk_firmware/issues/2179); this is a work around))
 - Layout optimized for ergonomics and ease of typing: Most actions don't require pressing awkward button combinations with one hand. The work is split between both hands if possible

@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Linux Adjust
    * ,-----------------------------------------------------------------------------------.
-   * | Debug| Btn1 | M Up | Btn2 |Scrll+|Delete|   /  |   1  |   2  |   3  |   -  | Reset|
+   * | NumLk| Btn1 | M Up | Btn2 |Scrll+|Delete|   /  |   1  |   2  |   3  |   -  | Reset|
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * | Btn3 |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Forw |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------------------------------------------------'
    */
   [_L_ADJUST] = LAYOUT_planck_mit(
-    DEBUG,  KC_BTN1, KC_MS_U,           KC_BTN2, KC_WH_U, RESET,  KC_PSLS,  KC_P1,   KC_P2, KC_P3,   KC_PMNS, RESET,
+    _NUM_PS,  KC_BTN1, KC_MS_U,           KC_BTN2, KC_WH_U, RESET,  KC_PSLS,  KC_P1,   KC_P2, KC_P3,   KC_PMNS, RESET,
     KC_BTN3,  KC_MS_L, KC_MS_D,         KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5, KC_P6,   KC_PPLS, _FORWARDS,
     KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, INF_TGL, L_TO_M,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8, KC_P9,   KC_PENT, _BACKWARDS,
     KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0, KC_PDOT, KC_RALT, VIM_NORMAL
@@ -179,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* MacOS Adjust
    * ,-----------------------------------------------------------------------------------.
-   * | Debug| Btn1 | M Up | Btn2 |Scrll+|Delete|   /  |   1  |   2  |   3  |   -  | Reset|
+   * | NumLk| Btn1 | M Up | Btn2 |Scrll+|Delete|   /  |   1  |   2  |   3  |   -  | Reset|
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * | Btn3 |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Forw |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -189,7 +189,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------------------------------------------------'
    */
   [_M_ADJUST] = LAYOUT_planck_mit(
-    DEBUG,   KC_BTN1, KC_MS_U,          KC_BTN2, KC_WH_U, KC_DEL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, RESET,
+    _NUM_PS,   KC_BTN1, KC_MS_U,          KC_BTN2, KC_WH_U, KC_DEL, KC_PSLS,  KC_P1,   KC_P2,   KC_P3,    KC_PMNS, RESET,
     KC_BTN3, KC_MS_L, KC_MS_D,          KC_MS_R, KC_WH_D, KC_TAB, KC_PAST,  KC_P4,   KC_P5,   KC_P6,    KC_PPLS, _FORWARDS,
     KC_TRNS, RGB_TOG, RGB_MODE_FORWARD, INF_TGL, M_TO_L,  KC_ESC, KC_BSPC,  KC_P7,   KC_P8,   KC_P9,    KC_PENT, _BACKWARDS,
     KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_SPC,           KC_TRNS, KC_P0,   KC_PDOT,  KC_RALT, VIM_NORMAL
@@ -345,6 +345,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   #endif
 
   switch (keycode) {
+
+    case _NUM_PS: {
+      uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
+      if(record->event.pressed) {
+        if(shifted) {
+          unregister_code(KC_LSFT);
+          register_code(KC_PSCREEN);
+          register_code(KC_LSFT);
+        } else {
+          register_code(KC_NUMLOCK);
+        }
+      } else {
+        // unregistering both keys; is this potentially bad practice?
+        unregister_code(KC_PSCREEN);
+        unregister_code(KC_NUMLOCK);
+      }
+    } break;
 
     case L_LOWER:
       if(record->event.pressed) {

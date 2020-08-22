@@ -5,7 +5,7 @@
 #ifdef CONSOLE_ENABLE
 #include <print.h>
 #define _print(str) print(str)
-#elif
+#else
 #define _print(str) (void)0
 #endif
 
@@ -33,6 +33,9 @@ enum keycodes {
   L_TO_M,
   /* switch from MacOs layout to Linux layout */
   M_TO_L,
+
+  /* numlock normally, but print screen when shift is pressed */
+  _NUM_PS,
 
   /* Linux layer switches */
   L_BASE, L_LOWER, L_RAISE, L_ADJUST,
