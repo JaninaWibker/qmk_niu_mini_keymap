@@ -1,6 +1,6 @@
 # Personal layout
 
-This is my personal layout for the niu mini. It uses 4 different layers (base, lower, raise, adjust). Many of the features are a combination of different layouts and designs such as the planck but also the signum 3 by Troy Fetcher.
+This is my personal layout for the niu mini. It uses 4 different layers (base, lower, raise, adjust). Many of the features are a combination of different layouts and designs such as the planck but also the signum 3 by Troy Fletcher.
 
 For an overview of the layout see [this](http://www.keyboard-layout-editor.com/#/gists/681891570020fad2fdec17477216f398)
 

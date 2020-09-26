@@ -34,6 +34,8 @@ enum keycodes {
   /* switch from MacOs layout to Linux layout */
   M_TO_L,
 
+  M_FN,
+
   /* numlock normally, but print screen when shift is pressed */
   _NUM_PS,
 

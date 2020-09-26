@@ -47,6 +47,8 @@
 #define LAYER_VIM_NORMAL_COLORS RGB_PINK
 #define LAYER_VIM_VISUAL_COLORS RGB_GREEN
 
+/*  -- BEHAVIOUR & OS SPECIFIC KEYS --  */
+
 /* #define WPM_INDICATOR */
 #define LAYER_INDICATOR
 #define CAPSLOCK_INDICATOR
@@ -64,35 +66,49 @@
 #define _L_SLASH LSFT(KC_7)
 #define _M_SLASH LSFT(KC_7)
 
+
 /* asterisks key on both Linux and MacOS; assuming german layout */
 #define _L_ASTERISKS LSFT(KC_0)
 #define _M_ASTERISKS LSFT(KC_0) // potentially customize for usage with default osx-layout
+
 
 /* dollar sign on both Linux and MaxOS; assuming german layout */
 #define _L_DOLLAR LSFT(KC_4)
 #define _M_DOLLAR LSFT(KC_4)
 
+
 #define _BACKWARDS LCTL(KC_PGUP)
 #define _FORWARDS  LCTL(KC_PGDN)
+
 
 /* tab normally, but L_LOWER / M_LOWER when held down */
 #define _L_TAB_LOWER LT(_L_LOWER, KC_TAB)
 #define _M_TAB_LOWER LT(_M_LOWER, KC_TAB)
 
+
+/* apple fn key (mapped to F20, needs to be software remapped); if shift is pressed as well handle as if ADJUST was pressed */
+#define _M_FN_RAW KC_F20
+
+
 /* esc normally, but (left) control when held down */
 #define _CTRL_ESC MT(MOD_LCTL, KC_ESC)
+
 
 /* space normally, but (left) control when held down */ // TODO: currently not being used
 #define _CTRL_SPC MT(MOD_LCTL, KC_SPC)
 
+
 /* enter normally, but (right) shift when held down */
 #define _RSFT_RET MT(MOD_RSFT, KC_ENT) // TODO: currently not being used
+
 
 /* left arrow normally, but (right) gui when held down */
 #define _GUI_MINS  MT(MOD_RGUI, KC_MINS)
 
+
 /* right arrow normally, but (right) shift when held down */
 #define _CTL_EQL MT(MOD_RCTL, KC_EQL)
+
 
 /* wether to enable vim emulation mode
   (this is an extra layer which allows to use some vim like commands
@@ -100,12 +116,22 @@
 */
 #define ENABLE_VIM_MODE
 
+
+/*
+  wether or not to invert scrolling direction on macOS (macOS has "scroll direction: natural" which
+  is natural  on a trackpad but reversed for normal scroll wheels; this just swaps the buttons)
+*/
+#define INVERT_MACOS_SCROLL
+
+
 /* this makes sure that layer_state_set_user is called when vim changes mode */
 #define VIM_CALL_LAYER_STATE_CHANGE_ON_MODE_SWITCH
+
 
 /*one shot key which (in conjunction with userspace code) switches to lower layer and activates shift */
 #define _L_MT_S_LOWER OSL(_L_LOWER)
 #define _M_MT_S_LOWER OSL(_M_LOWER)
+
 
 #ifdef CAPSLOCK_KEY
 #define _L_CAPSLOCK KC_CAPS
@@ -115,5 +141,10 @@
 #define _M_CAPSLOCK _M_MT_S_LOWER
 #endif
 
-/* apple fn key (mapped to F20, needs to be software remapped) */
-#define _M_FN				 KC_F20
+#ifdef INVERT_MACOS_SCROLL
+#define _M_MS_UP KC_MS_D
+#define _M_MS_DW KC_MS_U
+#else
+#define _M_MS_UP KC_MS_U
+#define _M_MS_DW KC_MS_D
+#endif
