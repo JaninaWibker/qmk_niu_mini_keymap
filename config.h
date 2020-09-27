@@ -74,7 +74,7 @@
 
 /* dollar sign on both Linux and MaxOS; assuming german layout */
 #define _L_DOLLAR LSFT(KC_4)
-#define _M_DOLLAR LSFT(KC_4)
+#define _M_DOLLAR LSFT(KC_4) // this is potentially redefined somewhere else (see ENABLE_NON_US_BSLASH)
 
 
 #define _BACKWARDS LCTL(KC_PGUP)
@@ -117,11 +117,16 @@
 #define ENABLE_VIM_MODE
 
 
+/* replace dedicated dollar sign key with non_us_backslash on macOS (macOS uses the non_us_backslash for
+   keyboard shortcuts (sometimes; could be dependant on layout; afaik grave is sometimes used as well))
+*/
+#define ENABLE_NON_US_BSLASH
+
 /*
   wether or not to invert scrolling direction on macOS (macOS has "scroll direction: natural" which
   is natural  on a trackpad but reversed for normal scroll wheels; this just swaps the buttons)
 */
-#define INVERT_MACOS_SCROLL
+// #define INVERT_MACOS_SCROLL
 
 
 /* this makes sure that layer_state_set_user is called when vim changes mode */
@@ -132,6 +137,10 @@
 #define _L_MT_S_LOWER OSL(_L_LOWER)
 #define _M_MT_S_LOWER OSL(_M_LOWER)
 
+#ifdef ENABLE_NON_US_BSLASH
+#undef _M_DOLLAR
+#define _M_DOLLAR KC_NONUS_BSLASH
+#endif
 
 #ifdef CAPSLOCK_KEY
 #define _L_CAPSLOCK KC_CAPS

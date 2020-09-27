@@ -39,3 +39,17 @@ For an overview of the layout see [this](http://www.keyboard-layout-editor.com/#
 ## LED setup
 
 ![LED layout](./led-layout.svg)
+
+
+## Further information
+
+Some useful pieces of information for debugging / working on the layout
+
+Pressing shift+INF_TGL will not toggle the info_mode but send the current device status to the pc. The format looks as follows: `OS:<M|L>,INF:<on|off>,RGB hue,sat,val,mode: <000-255>,<000-255>,<000-255>,<000-255>`.
+
+When resetting the eeprom it is initialized using the following defaults:
+```yaml
+OS: Linux
+INFO_MODE: off
+BACKGROUND_COLOR (hsv): 192, 255, 255
+```

@@ -58,9 +58,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,-----------------------------------------------------------------------------------.
    * | Ctrl |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * | Tab  |   \  |   ^  |   *  |   /  |   #  | Left | Down |  Up  |Right |   ;  |  '   |
+   * | Tab  |   \  |   ^  |   *  |   /  |   #  | Left | Down |  Up  |Right |   <  |  >   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * | Shift| Val- | Val+ |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Delete|
+   * | Shift|   $  |  Del |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  | Shift|
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * |Adjust| Ctrl | Super|  Alt | Raise|    Enter    |Lower |AltGr | Caps | Left | Right|
    * `-----------------------------------------------------------------------------------'
@@ -76,11 +76,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,-----------------------------------------------------------------------------------.
    * | Ctrl |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * | Super|Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
+   * | Super|Vol Up|  Up  |VolDwn| Play |  Tab |  +   |  ?   |   <  |   >  |   [  |  ]   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
    * | Shift| Left | Down | Right| Mute |  Esc |Enter | End  |   ,  |   .  |   /  | F12  |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * |Adjust| Ctrl | Super|  Alt | Raise|  Backspace  |Lower |AltGr | Caps | Hue+ | Sat+ |
+   * |Adjust| Ctrl | Super|  Alt | Raise|  Backspace  |Lower |AltGr | Hue+ | Sat+ | Val+ |
    * `-----------------------------------------------------------------------------------'
    */
   [_L_RAISE] = LAYOUT_planck_mit(
@@ -145,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,-----------------------------------------------------------------------------------.
    * | Ctrl |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * | Tab  |   \  |   ^  |   *  |   /  |   #  | Left | Down |  Up  |Right |   ;  |  '   |
+   * | Tab  |   \  |   ^  |   *  |   /  |   #  | Left | Down |  Up  |Right |   <  |  >   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * | Shift| Val- | Val+ |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  |Delete|
+   * | Shift|   $  |  Del |  Ins | Home | P Up |P Down| End  |   ,  |   .  |   /  | Shift|
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * |  Fn  | Ctrl |  Alt | Super| Raise|    Enter    |Lower |AltGr | Caps | Left | Right|
    * `-----------------------------------------------------------------------------------'
@@ -163,11 +163,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,-----------------------------------------------------------------------------------.
    * | Ctrl |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * | Super|Vol Up|  Up  |VolDwn| Play |      |      |      |      |      |   [  |  ]   |
+   * | Super|Vol Up|  Up  |VolDwn| Play |  Tab |  +   |  ?   |   <  |   >  |   [  |  ]   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
    * | Shift| Left | Down | Right| Mute |  Esc |Enter | End  |   ,  |   .  |   /  | F12  |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * |  Fn  | Ctrl |  Alt | Super| Raise|  Backspace  |Lower |AltGr | Caps | Hue+ | Sat+ |
+   * |  Fn  | Ctrl |  Alt | Super| Raise|  Backspace  |Lower |AltGr | Hue+ | Sat+ | Val+ |
    * `-----------------------------------------------------------------------------------'
    */
   [_M_RAISE] = LAYOUT_planck_mit(
@@ -179,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* MacOS Adjust
    * ,-----------------------------------------------------------------------------------.
-   * | NumLk| Btn1 | M Up | Btn2 |Scrll+|Delete|   /  |   1  |   2  |   3  |   -  | Reset|
+   * | NumLk| Btn1 | M Up | Btn2 |Scrll+|  Del |   /  |   1  |   2  |   3  |   -  | Reset|
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * | Btn3 |M Left|M Down|MRight|Scrll-|  Tab |   *  |   4  |   5  |   6  |   +  | Forw |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -376,14 +376,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case M_FN: {
       uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
       if(record->event.pressed) {
-        unregister_code(KC_LSFT);
         if(shifted) {
+          unregister_code(KC_LSFT);
           layer_on(_M_ADJUST);
+          register_code(KC_LSFT);
         } else {
           register_code(_M_FN_RAW);
           layer_off(_M_ADJUST);
         }
-        register_code(KC_LSFT);
       } else {
         layer_off(_M_ADJUST);
         unregister_code(_M_FN_RAW);
